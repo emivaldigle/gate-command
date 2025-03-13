@@ -1,0 +1,41 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // PostgreSQL Driver
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    // MapStruct
+    implementation 'org.mapstruct:mapstruct:1.6.3'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+
+    // Liquibase
+    implementation 'org.liquibase:liquibase-core'
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5' // Para Spring Boot 3.x
+
+
+    // Document handling
+    implementation 'org.apache.poi:poi-ooxml:5.2.3'
+    implementation 'com.opencsv:opencsv:5.8'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    // Rate Limiting (Spring Boot Starter)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}

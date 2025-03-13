@@ -1,0 +1,53 @@
+application:
+  name: gate-command
+spring:
+  security:
+    user:
+      name: admin
+      password: admin
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gate_control?createDatabaseIfNotExist=true
+    username: gc_user
+    password: 123.pass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.xml
+  webflux:
+    base-path: /api
+    rate-limit:
+      enabled: true
+      limits:
+        - key: ip
+          limit: 10
+          refresh-period: 60s
+        - key: endpoint
+          limit: 20
+          refresh-period: 60s
+  api-docs:
+    enabled: true # Habilita la generación de documentos OpenAPI
+    swagger-ui:
+      enabled: true # Habilita la interfaz de Swagger UI
+      path: /swagger-ui.html # Ruta para acceder a la interfaz de Swagger
+    packages-to-scan: com.visp.gate_command.controller # Paquetes donde se encuentran los controladores
+
+  # Puerto del servidor (opcional)
+server:
+  port: 8080
+
+# JWT
+jwt:
+  secret: 50dl29aki284
+  expiration: 86400000 # 24 horas en milisegundos
+
+# Logging
+logging:
+  level:
+    root: INFO
+    com.visp.gate_command: DEBUG
