@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Appender con MaskingPatternLayout -->
+    <appender name="MASKED_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.visp.gate_command.aop.MaskingPatternLayout">
+                <pattern>%d{ISO8601} [%thread] %-5level %logger - %message%n</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <!-- Appender JSON (opcional si necesitas logs estructurados) -->
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "timestamp": "%date{ISO8601}",
+                        "level": "%level",
+                        "logger": "%logger",
+                        "message": "%message"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <!-- Configuración del nivel de log -->
+    <root level="INFO">
+        <appender-ref ref="MASKED_CONSOLE" />
+        <!-- Descomenta si necesitas logs JSON -->
+        <!-- <appender-ref ref="JSON_CONSOLE" /> -->
+    </root>
+</configuration>
