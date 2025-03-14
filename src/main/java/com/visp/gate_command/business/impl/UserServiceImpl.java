@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
   private final EntityService entityService;
   private final UserMapper userMapper;
   private final List<UserType> ALLOWED_USER_TYPES =
-      List.of(UserType.ADMINISTRATOR, UserType.RESIDENT, UserType.CONCIERGE);
+      List.of(UserType.ADMINISTRATOR, UserType.RESIDENT, UserType.CONCIERGE, UserType.VISIT);
 
   @Override
   public UserDto create(UserDto userDto) {
@@ -81,6 +81,8 @@ public class UserServiceImpl implements UserService {
                 .lastName(row[2])
                 .email(row[3])
                 .phoneNumber(row[4])
+                .unit(row[5])
+                .hasAssignedParking(Boolean.valueOf(row[6]))
                 .password(Encryptor.getEncryptedPassword(DEFAULT_PASSWORD))
                 .type(UserType.RESIDENT)
                 .entity(optionalEntityDto.get())

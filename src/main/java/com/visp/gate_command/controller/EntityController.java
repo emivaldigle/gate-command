@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Tag(name = "Entity Management", description = "Endpoints for managing entities")
+@RequestMapping("/entities")
 public interface EntityController {
 
   @Operation(
@@ -32,7 +34,7 @@ public interface EntityController {
                     schema = @Schema(implementation = EntityDto.class))),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
       })
-  @PostMapping("/entities")
+  @PostMapping
   ResponseEntity<EntityDto> save(@RequestBody @Valid EntityDto entityDto);
 
   @Operation(
@@ -48,7 +50,7 @@ public interface EntityController {
                     schema = @Schema(implementation = EntityDto.class))),
         @ApiResponse(responseCode = "204", description = "No entities found", content = @Content)
       })
-  @GetMapping("/entities")
+  @GetMapping
   ResponseEntity<List<EntityDto>> retrieveAll();
 
   @Operation(
@@ -61,7 +63,7 @@ public interface EntityController {
             content = @Content),
         @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
       })
-  @DeleteMapping("/entities/{id}")
+  @DeleteMapping("/{id}")
   ResponseEntity<Void> delete(@PathVariable Long id);
 
   @Operation(
@@ -74,6 +76,6 @@ public interface EntityController {
             content = @Content),
         @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
       })
-  @PatchMapping("/entities")
-  ResponseEntity<EntityDto> update(@RequestBody EntityDto entityDto);
+  @PatchMapping("/{id}")
+  ResponseEntity<EntityDto> update(@RequestBody EntityDto entityDto, @PathVariable Long id);
 }

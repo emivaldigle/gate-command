@@ -43,7 +43,7 @@ class PocControllerImplTest {
     PocDto pocDto = new PocDto();
     when(pocService.update(pocDto)).thenReturn(Optional.of(pocDto));
 
-    ResponseEntity<PocDto> response = pocController.update(pocDto);
+    ResponseEntity<PocDto> response = pocController.update(pocDto, 1L);
 
     assertEquals(200, response.getStatusCode().value());
     assertEquals(pocDto, response.getBody());

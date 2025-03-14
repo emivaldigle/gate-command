@@ -39,11 +39,14 @@ Este proyecto utiliza tecnologías modernas como **Spring Boot**, **Hibernate**,
 - Registro de visitas con detalles como nombre, placa del vehículo, fecha de expiración, etc.
 - Notificaciones automáticas para residentes sobre visitas pendientes.
 
-### 5. Eventos y Logs
+### 5. Gestión de estacionamientos
+- Registro y actualización en tiempo real de estacionamientos
+
+### 6. Eventos y Logs
 - Registro de eventos relacionados con accesos vehiculares y peatonales.
 - Generación de informes detallados para auditoría.
 
-### 6. Seguridad
+### 7. Seguridad
 - Autenticación y autorización robusta mediante **Spring Security**.
 - Encriptación de contraseñas y datos sensibles.
 

@@ -13,10 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "User Management", description = "Endpoints for managing users")
+@RequestMapping("/users")
 public interface UserController {
   @Operation(
       summary = "Save a new user",
@@ -31,7 +33,7 @@ public interface UserController {
                     schema = @Schema(implementation = UserDto.class))),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
       })
-  @PostMapping("/users")
+  @PostMapping
   ResponseEntity<UserDto> save(@RequestBody @Valid UserDto userDto);
 
   @Operation(
@@ -47,9 +49,7 @@ public interface UserController {
                     schema = @Schema(implementation = UserDto.class))),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
       })
-  @PostMapping(
-      value = "/users/batch-save/{entityId}",
-      consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping(value = "/batch-save/{entityId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   ResponseEntity<Void> batchSave(
       @RequestParam("file") MultipartFile file, @PathVariable Long entityId);
 
@@ -66,9 +66,7 @@ public interface UserController {
                     schema = @Schema(implementation = EntityDto.class))),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
       })
-  @PostMapping(
-      value = "/users/batch-delete/{entityId}",
-      consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping(value = "/batch-delete/{entityId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   ResponseEntity<Void> batchDelete(
       @RequestParam("file") MultipartFile file, @PathVariable Long entityId);
 }

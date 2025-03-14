@@ -4,14 +4,9 @@ import com.visp.gate_command.aop.Loggable;
 import com.visp.gate_command.business.EntityService;
 import com.visp.gate_command.controller.EntityController;
 import com.visp.gate_command.domain.dto.EntityDto;
-import com.visp.gate_command.exception.NotFoundException;
-import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,7 +17,7 @@ public class EntityControllerImpl implements EntityController {
   private final EntityService entityService;
 
   @Override
-  public ResponseEntity<EntityDto> save(@RequestBody @Valid EntityDto entityDto) {
+  public ResponseEntity<EntityDto> save(EntityDto entityDto) {
     return ResponseEntity.ok(entityService.create(entityDto));
   }
 
@@ -32,17 +27,17 @@ public class EntityControllerImpl implements EntityController {
   }
 
   @Override
-  public ResponseEntity<Void> delete(@PathVariable Long id) {
+  public ResponseEntity<Void> delete(Long id) {
     entityService.delete(id);
     return ResponseEntity.accepted().build();
   }
 
   @Override
-  public ResponseEntity<EntityDto> update(@RequestBody @Valid EntityDto entityDto) {
-    Optional<EntityDto> entityDtoOptional = entityService.update(entityDto);
-    if (entityDtoOptional.isEmpty()) {
-      throw new NotFoundException("User not found");
-    }
-    return ResponseEntity.ok(entityDtoOptional.get());
+  public ResponseEntity<EntityDto> update(EntityDto entityDto, Long id) {
+    entityDto.setId(id);
+    return ResponseEntity.ok(
+        entityService
+            .update(entityDto)
+            .orElseThrow(() -> new RuntimeException("Entity not found")));
   }
 }

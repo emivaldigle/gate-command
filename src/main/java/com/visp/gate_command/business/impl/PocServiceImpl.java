@@ -42,7 +42,7 @@ public class PocServiceImpl implements PocService {
     if (optionalPoc.isEmpty()) {
       throw new NotFoundException("Poc not found");
     }
-    pocRepository.delete(optionalPoc.get());
+    pocRepository.deleteById(id);
   }
 
   @Override

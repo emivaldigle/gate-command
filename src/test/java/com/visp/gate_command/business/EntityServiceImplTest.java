@@ -91,7 +91,7 @@ class EntityServiceImplTest {
     entityService.delete(entityId);
 
     // Assert
-    verify(repository, times(1)).delete(entity);
+    verify(repository, times(1)).deleteById(entityId);
   }
 
   @Test

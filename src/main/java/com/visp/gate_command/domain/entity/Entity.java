@@ -53,6 +53,9 @@ public class Entity {
   private int parkingHoursAllowed;
 
   @Column(nullable = false)
+  private int visitSizeLimit;
+
+  @Column(nullable = false)
   private boolean active;
 
   @Column(nullable = false, updatable = false)

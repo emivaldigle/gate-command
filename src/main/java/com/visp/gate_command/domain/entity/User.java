@@ -42,11 +42,19 @@ public class User {
   private String password;
 
   @Column(nullable = false)
+  private String unit;
+
+  @Column(nullable = false)
   private UserType type;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "entity_id", nullable = false)
   private Entity entity;
+
+  @Column(nullable = false)
+  private Boolean hasAssignedParking;
+
+  @Column private LocalDateTime visitDateTime;
 
   @Column(nullable = false)
   private LocalDateTime createdAt;

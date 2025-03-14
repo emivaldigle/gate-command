@@ -1,5 +1,6 @@
 package com.visp.gate_command.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.visp.gate_command.domain.enums.PocType;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -25,8 +26,11 @@ public class PocDto {
 
   private String location;
 
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime lastSync;
 
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime createdAt;
+
   private boolean active;
 }

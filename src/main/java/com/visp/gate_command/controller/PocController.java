@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "POC Management", description = "Endpoints for managing POCs")
+@RequestMapping("/pocs")
 public interface PocController {
 
   @Operation(
@@ -26,7 +27,7 @@ public interface PocController {
                     schema = @Schema(implementation = PocDto.class))),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
       })
-  @PostMapping("/pocs")
+  @PostMapping
   ResponseEntity<PocDto> create(@RequestBody PocDto pocDto);
 
   @Operation(
@@ -42,8 +43,8 @@ public interface PocController {
                     schema = @Schema(implementation = PocDto.class))),
         @ApiResponse(responseCode = "404", description = "POC not found", content = @Content)
       })
-  @PatchMapping("/pocs")
-  ResponseEntity<PocDto> update(@RequestBody PocDto pocDto);
+  @PatchMapping("/{id}")
+  ResponseEntity<PocDto> update(@RequestBody PocDto pocDto, @PathVariable Long id);
 
   @Operation(
       summary = "Delete a POC by ID",
@@ -55,7 +56,7 @@ public interface PocController {
             content = @Content),
         @ApiResponse(responseCode = "404", description = "POC not found", content = @Content)
       })
-  @DeleteMapping("/pocs/{id}")
+  @DeleteMapping("/{id}")
   ResponseEntity<Void> delete(@PathVariable Long id);
 
   @Operation(
@@ -71,6 +72,6 @@ public interface PocController {
                     schema = @Schema(implementation = PocDto.class))),
         @ApiResponse(responseCode = "404", description = "No POCs found", content = @Content)
       })
-  @GetMapping("/pocs/find-by-entity/{entityId}")
+  @GetMapping("/find-by-entity/{entityId}")
   ResponseEntity<List<PocDto>> retrievePocByEntity(@PathVariable Long entityId);
 }
