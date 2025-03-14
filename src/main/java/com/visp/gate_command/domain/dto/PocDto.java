@@ -3,12 +3,14 @@ package com.visp.gate_command.domain.dto;
 import com.visp.gate_command.domain.enums.PocType;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PocDto {
 
   private Long id;
@@ -26,4 +28,5 @@ public class PocDto {
   private LocalDateTime lastSync;
 
   private LocalDateTime createdAt;
+  private boolean active;
 }

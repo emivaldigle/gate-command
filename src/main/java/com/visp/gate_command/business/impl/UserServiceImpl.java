@@ -11,12 +11,14 @@ import com.visp.gate_command.domain.entity.User;
 import com.visp.gate_command.domain.enums.UserType;
 import com.visp.gate_command.exception.FileProcessingException;
 import com.visp.gate_command.exception.NotFoundException;
-import com.visp.gate_command.mapper.EntityMapper;
+import com.visp.gate_command.exception.UserAlreadyExistException;
 import com.visp.gate_command.mapper.UserMapper;
 import com.visp.gate_command.repository.UserRepository;
 import com.visp.gate_command.util.Encryptor;
 import com.visp.gate_command.util.FileProcessor;
+import jakarta.transaction.Transactional;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,12 +33,16 @@ public class UserServiceImpl implements UserService {
   private final UserRepository repository;
   private final EntityService entityService;
   private final UserMapper userMapper;
-  private final EntityMapper entityMapper;
   private final List<UserType> ALLOWED_USER_TYPES =
       List.of(UserType.ADMINISTRATOR, UserType.RESIDENT, UserType.CONCIERGE);
 
   @Override
   public UserDto create(UserDto userDto) {
+    Optional<User> userByEmail = repository.findByEmail(userDto.getEmail());
+    if (userByEmail.isPresent()) {
+      throw new UserAlreadyExistException("User email already exists");
+    }
+    userDto.setCreatedAt(LocalDateTime.now());
     return Optional.of(userDto)
         .filter(dto -> ALLOWED_USER_TYPES.contains(dto.getType()))
         .map(dto -> repository.save(userMapper.toEntity(dto)))
@@ -48,6 +54,8 @@ public class UserServiceImpl implements UserService {
                         "Unable to create user with given profile %s", userDto.getType())));
   }
 
+  @Override
+  @Transactional
   public void loadUsersWithFile(MultipartFile file, Long entityId) {
     Optional<EntityDto> optionalEntityDto = entityService.findById(entityId);
     if (optionalEntityDto.isEmpty()) {
@@ -66,15 +74,19 @@ public class UserServiceImpl implements UserService {
       }
 
       for (String[] row : rows) {
-        User user = new User();
-        user.setDocument(row[0]);
-        user.setName(row[1]);
-        user.setLastName(row[2]);
-        user.setEmail(row[3]);
-        user.setPhoneNumber(row[4]);
-        user.setPassword(Encryptor.getEncryptedPassword(DEFAULT_PASSWORD));
-        user.setType(UserType.RESIDENT);
-        user.setEntity(entityMapper.toEntity(optionalEntityDto.get()));
+        UserDto userDto =
+            UserDto.builder()
+                .document(row[0])
+                .name(row[1])
+                .lastName(row[2])
+                .email(row[3])
+                .phoneNumber(row[4])
+                .password(Encryptor.getEncryptedPassword(DEFAULT_PASSWORD))
+                .type(UserType.RESIDENT)
+                .entity(optionalEntityDto.get())
+                .createdAt(LocalDateTime.now())
+                .build();
+        repository.save(userMapper.toEntity(userDto));
       }
     } catch (Exception ex) {
       throw new FileProcessingException(
@@ -85,6 +97,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  @Transactional
   public void deactivateUsersWithFile(MultipartFile file, Long entityId) {
     try {
       InputStream inputStream = file.getInputStream();

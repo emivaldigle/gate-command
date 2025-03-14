@@ -1,45 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.visp.gate_command.GateCommandApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-03-13T01:04:08" hostname="emilio-X670-AORUS-ELITE-AX" time="0.233">
+<testsuite name="com.visp.gate_command.GateCommandApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-03-14T04:58:01" hostname="emilio-X670-AORUS-ELITE-AX" time="0.302">
   <properties/>
-  <testcase name="contextLoads()" classname="com.visp.gate_command.GateCommandApplicationTests" time="0.233"/>
-  <system-out><![CDATA[22:04:06.359 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.visp.gate_command.GateCommandApplicationTests]: GateCommandApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-22:04:06.397 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.visp.gate_command.GateCommandApplication for test class com.visp.gate_command.GateCommandApplicationTests
-22:04:06,321 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.5.16
-22:04:06,322 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - Here is a list of configurators discovered as a service, by rank: 
-22:04:06,322 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe -   org.springframework.boot.logging.logback.RootLogLevelConfigurator
-22:04:06,322 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - They will be invoked in order until ExecutionStatus.DO_NOT_INVOKE_NEXT_IF_ANY is returned.
-22:04:06,322 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - Constructed configurator of type class org.springframework.boot.logging.logback.RootLogLevelConfigurator
-22:04:06,325 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - org.springframework.boot.logging.logback.RootLogLevelConfigurator.configure() call lasted 0 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
-22:04:06,325 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
-22:04:06,326 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
-22:04:06,326 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
-22:04:06,327 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
-22:04:06,327 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 1 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
-22:04:06,327 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
-22:04:06,327 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
-22:04:06,327 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
-22:04:06,327 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.xml]
-22:04:06,327 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 0 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
-22:04:06,327 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - Trying to configure with ch.qos.logback.classic.BasicConfigurator
-22:04:06,327 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - Constructed configurator of type class ch.qos.logback.classic.BasicConfigurator
-22:04:06,327 |-INFO in ch.qos.logback.classic.BasicConfigurator@70972170 - Setting up default configuration.
-22:04:06,332 |-INFO in ch.qos.logback.core.ConsoleAppender[console] - BEWARE: Writing to the console can be very slow. Avoid logging to the 
-22:04:06,332 |-INFO in ch.qos.logback.core.ConsoleAppender[console] - console in production environments, especially in high volume systems.
-22:04:06,332 |-INFO in ch.qos.logback.core.ConsoleAppender[console] - See also https://logback.qos.ch/codes.html#slowConsole
-22:04:06,332 |-INFO in ch.qos.logback.classic.util.ContextInitializer@54e2fe - ch.qos.logback.classic.BasicConfigurator.configure() call lasted 5 milliseconds. ExecutionStatus=NEUTRAL
-22:04:06,556 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [CONSOLE]
-22:04:06,556 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
-22:04:06,560 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders] for [providers] property
-22:04:06,562 |-WARN in ch.qos.logback.core.model.processor.ImplicitModelHandler - Ignoring unknown property [jsonMask] in [net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders]
-22:04:06,562 |-INFO in ch.qos.logback.core.model.processor.ImplicitModelHandler - Assuming default type [net.logstash.logback.composite.loggingevent.LoggingEventPatternJsonProvider] for [pattern] property
-22:04:06,639 |-INFO in ch.qos.logback.core.ConsoleAppender[CONSOLE] - BEWARE: Writing to the console can be very slow. Avoid logging to the 
-22:04:06,639 |-INFO in ch.qos.logback.core.ConsoleAppender[CONSOLE] - console in production environments, especially in high volume systems.
-22:04:06,639 |-INFO in ch.qos.logback.core.ConsoleAppender[CONSOLE] - See also https://logback.qos.ch/codes.html#slowConsole
-22:04:06,639 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
-22:04:06,639 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@119aa36 - Propagating INFO level on Logger[ROOT] onto the JUL framework
-22:04:06,639 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [CONSOLE] to Logger[ROOT]
-22:04:06,639 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@4e1a46fb - End of configuration.
-22:04:06,639 |-INFO in org.springframework.boot.logging.logback.SpringBootJoranConfigurator@69fe0ed4 - Registering current configuration as safe fallback point
+  <testcase name="contextLoads()" classname="com.visp.gate_command.GateCommandApplicationTests" time="0.302"/>
+  <system-out><![CDATA[01:57:56.830 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.visp.gate_command.GateCommandApplicationTests]: GateCommandApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+01:57:56.932 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.visp.gate_command.GateCommandApplication for test class com.visp.gate_command.GateCommandApplicationTests
+01:57:56,728 |-INFO in ch.qos.logback.classic.LoggerContext[default] - This is logback-classic version 1.5.16
+01:57:56,730 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - Here is a list of configurators discovered as a service, by rank: 
+01:57:56,730 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 -   org.springframework.boot.logging.logback.RootLogLevelConfigurator
+01:57:56,730 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - They will be invoked in order until ExecutionStatus.DO_NOT_INVOKE_NEXT_IF_ANY is returned.
+01:57:56,730 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - Constructed configurator of type class org.springframework.boot.logging.logback.RootLogLevelConfigurator
+01:57:56,733 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - org.springframework.boot.logging.logback.RootLogLevelConfigurator.configure() call lasted 0 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+01:57:56,733 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - Trying to configure with ch.qos.logback.classic.joran.SerializedModelConfigurator
+01:57:56,733 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - Constructed configurator of type class ch.qos.logback.classic.joran.SerializedModelConfigurator
+01:57:56,734 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.scmo]
+01:57:56,734 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.scmo]
+01:57:56,734 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - ch.qos.logback.classic.joran.SerializedModelConfigurator.configure() call lasted 1 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+01:57:56,734 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - Trying to configure with ch.qos.logback.classic.util.DefaultJoranConfigurator
+01:57:56,735 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - Constructed configurator of type class ch.qos.logback.classic.util.DefaultJoranConfigurator
+01:57:56,735 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+01:57:56,735 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.xml]
+01:57:56,735 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - ch.qos.logback.classic.util.DefaultJoranConfigurator.configure() call lasted 0 milliseconds. ExecutionStatus=INVOKE_NEXT_IF_ANY
+01:57:56,735 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - Trying to configure with ch.qos.logback.classic.BasicConfigurator
+01:57:56,736 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - Constructed configurator of type class ch.qos.logback.classic.BasicConfigurator
+01:57:56,736 |-INFO in ch.qos.logback.classic.BasicConfigurator@4c28d0b4 - Setting up default configuration.
+01:57:56,745 |-INFO in ch.qos.logback.core.ConsoleAppender[console] - BEWARE: Writing to the console can be very slow. Avoid logging to the 
+01:57:56,745 |-INFO in ch.qos.logback.core.ConsoleAppender[console] - console in production environments, especially in high volume systems.
+01:57:56,745 |-INFO in ch.qos.logback.core.ConsoleAppender[console] - See also https://logback.qos.ch/codes.html#slowConsole
+01:57:56,745 |-INFO in ch.qos.logback.classic.util.ContextInitializer@6facca85 - ch.qos.logback.classic.BasicConfigurator.configure() call lasted 9 milliseconds. ExecutionStatus=NEUTRAL
+01:57:57,296 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - Processing appender named [MASKED_CONSOLE]
+01:57:57,296 |-INFO in ch.qos.logback.core.model.processor.AppenderModelHandler - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+01:57:57,319 |-INFO in ch.qos.logback.core.ConsoleAppender[MASKED_CONSOLE] - BEWARE: Writing to the console can be very slow. Avoid logging to the 
+01:57:57,319 |-INFO in ch.qos.logback.core.ConsoleAppender[MASKED_CONSOLE] - console in production environments, especially in high volume systems.
+01:57:57,319 |-INFO in ch.qos.logback.core.ConsoleAppender[MASKED_CONSOLE] - See also https://logback.qos.ch/codes.html#slowConsole
+01:57:57,319 |-WARN in ch.qos.logback.core.model.processor.AppenderModelHandler - Appender named [JSON_CONSOLE] not referenced. Skipping further processing.
+01:57:57,319 |-INFO in ch.qos.logback.classic.model.processor.RootLoggerModelHandler - Setting level of ROOT logger to INFO
+01:57:57,320 |-INFO in ch.qos.logback.classic.jul.LevelChangePropagator@352ca561 - Propagating INFO level on Logger[ROOT] onto the JUL framework
+01:57:57,320 |-INFO in ch.qos.logback.core.model.processor.AppenderRefModelHandler - Attaching appender named [MASKED_CONSOLE] to Logger[ROOT]
+01:57:57,320 |-INFO in ch.qos.logback.core.model.processor.DefaultProcessor@5a6ecc6d - End of configuration.
+01:57:57,320 |-INFO in org.springframework.boot.logging.logback.SpringBootJoranConfigurator@539fcd47 - Registering current configuration as safe fallback point
 
 
   .   ____          _            __ _ _
@@ -51,36 +49,44 @@
 
  :: Spring Boot ::                (v3.4.3)
 
-{"timestamp":"2025-03-12 22:04:06,658","level":"INFO","logger":"org.hibernate.validator.internal.util.Version","message":"HV000001: Hibernate Validator 8.0.2.Final"}
-{"timestamp":"2025-03-12 22:04:06,672","level":"INFO","logger":"com.visp.gate_command.GateCommandApplicationTests","message":"Starting GateCommandApplicationTests using Java 21.0.6 with PID 39687 (started by emilio in /home/emilio/Documentos/gate-command)"}
-{"timestamp":"2025-03-12 22:04:06,673","level":"DEBUG","logger":"com.visp.gate_command.GateCommandApplicationTests","message":"Running with Spring Boot v3.4.3, Spring v6.2.3"}
-{"timestamp":"2025-03-12 22:04:06,673","level":"INFO","logger":"com.visp.gate_command.GateCommandApplicationTests","message":"No active profile set, falling back to 1 default profile: \"default\""}
-{"timestamp":"2025-03-12 22:04:06,834","level":"INFO","logger":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","message":"Bootstrapping Spring Data JPA repositories in DEFAULT mode."}
-{"timestamp":"2025-03-12 22:04:06,858","level":"INFO","logger":"org.springframework.data.repository.config.RepositoryConfigurationDelegate","message":"Finished Spring Data repository scanning in 20 ms. Found 5 JPA repository interfaces."}
-{"timestamp":"2025-03-12 22:04:07,153","level":"INFO","logger":"com.zaxxer.hikari.HikariDataSource","message":"HikariPool-1 - Starting..."}
-{"timestamp":"2025-03-12 22:04:07,227","level":"INFO","logger":"com.zaxxer.hikari.pool.HikariPool","message":"HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6a6e9289"}
-{"timestamp":"2025-03-12 22:04:07,228","level":"INFO","logger":"com.zaxxer.hikari.HikariDataSource","message":"HikariPool-1 - Start completed."}
-{"timestamp":"2025-03-12 22:04:07,291","level":"INFO","logger":"liquibase.database","message":"Set default schema name to public"}
-{"timestamp":"2025-03-12 22:04:07,503","level":"INFO","logger":"liquibase.changelog","message":"Reading from public.databasechangelog"}
-{"timestamp":"2025-03-12 22:04:07,528","level":"INFO","logger":"liquibase.ui","message":"Database is up to date, no changesets to execute"}
-{"timestamp":"2025-03-12 22:04:07,529","level":"INFO","logger":"liquibase.changelog","message":"Reading from public.databasechangelog"}
-{"timestamp":"2025-03-12 22:04:07,532","level":"INFO","logger":"liquibase.util","message":"UPDATE SUMMARY"}
-{"timestamp":"2025-03-12 22:04:07,532","level":"INFO","logger":"liquibase.util","message":"Run:                          0"}
-{"timestamp":"2025-03-12 22:04:07,532","level":"INFO","logger":"liquibase.util","message":"Previously run:               6"}
-{"timestamp":"2025-03-12 22:04:07,532","level":"INFO","logger":"liquibase.util","message":"Filtered out:                 0"}
-{"timestamp":"2025-03-12 22:04:07,532","level":"INFO","logger":"liquibase.util","message":"-------------------------------"}
-{"timestamp":"2025-03-12 22:04:07,532","level":"INFO","logger":"liquibase.util","message":"Total change sets:            6"}
-{"timestamp":"2025-03-12 22:04:07,533","level":"INFO","logger":"liquibase.util","message":"Update summary generated"}
-{"timestamp":"2025-03-12 22:04:07,533","level":"INFO","logger":"liquibase.command","message":"Command execution complete"}
-{"timestamp":"2025-03-12 22:04:07,582","level":"INFO","logger":"org.hibernate.jpa.internal.util.LogHelper","message":"HHH000204: Processing PersistenceUnitInfo [name: default]"}
-{"timestamp":"2025-03-12 22:04:07,601","level":"INFO","logger":"org.hibernate.Version","message":"HHH000412: Hibernate ORM core version 6.6.8.Final"}
-{"timestamp":"2025-03-12 22:04:07,614","level":"INFO","logger":"org.hibernate.cache.internal.RegionFactoryInitiator","message":"HHH000026: Second-level cache disabled"}
-{"timestamp":"2025-03-12 22:04:07,720","level":"INFO","logger":"org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo","message":"No LoadTimeWeaver setup: ignoring JPA class transformer"}
-{"timestamp":"2025-03-12 22:04:07,752","level":"INFO","logger":"org.hibernate.orm.connections.pooling","message":"HHH10001005: Database info:\n\tDatabase JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']\n\tDatabase driver: undefined/unknown\n\tDatabase version: 15.12\n\tAutocommit mode: undefined/unknown\n\tIsolation level: undefined/unknown\n\tMinimum pool size: undefined/unknown\n\tMaximum pool size: undefined/unknown"}
-{"timestamp":"2025-03-12 22:04:08,122","level":"INFO","logger":"org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator","message":"HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)"}
-{"timestamp":"2025-03-12 22:04:08,123","level":"INFO","logger":"org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean","message":"Initialized JPA EntityManagerFactory for persistence unit 'default'"}
-{"timestamp":"2025-03-12 22:04:08,373","level":"WARN","logger":"org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration","message":"spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning"}
-{"timestamp":"2025-03-12 22:04:08,564","level":"INFO","logger":"com.visp.gate_command.GateCommandApplicationTests","message":"Started GateCommandApplicationTests in 2.113 seconds (process running for 2.517)"}
+2025-03-14 01:57:57,359 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-14 01:57:57,399 [Test worker] INFO  com.visp.gate_command.GateCommandApplicationTests - Starting GateCommandApplicationTests using Java 21.0.6 with PID 102706 (started by emilio in /home/emilio/repos/gate-command)
+2025-03-14 01:57:57,400 [Test worker] DEBUG com.visp.gate_command.GateCommandApplicationTests - Running with Spring Boot v3.4.3, Spring v6.2.3
+2025-03-14 01:57:57,400 [Test worker] INFO  com.visp.gate_command.GateCommandApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-03-14 01:57:57,787 [Test worker] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-14 01:57:57,834 [Test worker] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38 ms. Found 6 JPA repository interfaces.
+2025-03-14 01:57:58,400 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-14 01:57:58,570 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@79f9300a
+2025-03-14 01:57:58,571 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-14 01:57:58,700 [Test worker] INFO  liquibase.database - Set default schema name to public
+2025-03-14 01:57:59,016 [Test worker] INFO  liquibase.changelog - Reading from public.databasechangelog
+2025-03-14 01:57:59,050 [Test worker] INFO  liquibase.ui - Database is up to date, no changesets to execute
+2025-03-14 01:57:59,051 [Test worker] INFO  liquibase.changelog - Reading from public.databasechangelog
+2025-03-14 01:57:59,055 [Test worker] INFO  liquibase.util - UPDATE SUMMARY
+2025-03-14 01:57:59,055 [Test worker] INFO  liquibase.util - Run:                          0
+2025-03-14 01:57:59,055 [Test worker] INFO  liquibase.util - Previously run:               6
+2025-03-14 01:57:59,056 [Test worker] INFO  liquibase.util - Filtered out:                 0
+2025-03-14 01:57:59,056 [Test worker] INFO  liquibase.util - -------------------------------
+2025-03-14 01:57:59,056 [Test worker] INFO  liquibase.util - Total change sets:            6
+2025-03-14 01:57:59,056 [Test worker] INFO  liquibase.util - Update summary generated
+2025-03-14 01:57:59,057 [Test worker] INFO  liquibase.command - Command execution complete
+2025-03-14 01:57:59,117 [Test worker] INFO  org.hibernate.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-14 01:57:59,152 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-14 01:57:59,177 [Test worker] INFO  org.hibernate.cache.internal.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-14 01:57:59,387 [Test worker] INFO  org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-14 01:57:59,460 [Test worker] INFO  org.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.12
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-14 01:58:00,143 [Test worker] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-14 01:58:00,145 [Test worker] INFO  org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-14 01:58:00,479 [Test worker] WARN  org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-03-14 01:58:00,577 [Test worker] INFO  org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2025-03-14 01:58:01,085 [Test worker] INFO  com.visp.gate_command.GateCommandApplicationTests - Started GateCommandApplicationTests in 4.039 seconds (process running for 4.903)
 ]]></system-out>
   <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
 WARNING: A Java agent has been loaded dynamically (/home/emilio/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.15.11/a38b16385e867f59a641330f0362ebe742788ed8/byte-buddy-agent-1.15.11.jar)

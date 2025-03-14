@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "User Management", description = "Endpoints for managing users")
@@ -29,7 +31,7 @@ public interface UserController {
                     schema = @Schema(implementation = UserDto.class))),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
       })
-  @PostMapping("/users/save")
+  @PostMapping("/users")
   ResponseEntity<UserDto> save(@RequestBody @Valid UserDto userDto);
 
   @Operation(
@@ -45,9 +47,11 @@ public interface UserController {
                     schema = @Schema(implementation = UserDto.class))),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
       })
-  @PostMapping("/users/batch-save/{entityId}")
-  ResponseEntity<Void> batchSAve(
-      @RequestBody MultipartFile multipartFile, @PathVariable Long entityId);
+  @PostMapping(
+      value = "/users/batch-save/{entityId}",
+      consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  ResponseEntity<Void> batchSave(
+      @RequestParam("file") MultipartFile file, @PathVariable Long entityId);
 
   @Operation(
       summary = "Remove given users from system",
@@ -62,7 +66,9 @@ public interface UserController {
                     schema = @Schema(implementation = EntityDto.class))),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
       })
-  @PostMapping("/users/batch-delete/{entityId}")
+  @PostMapping(
+      value = "/users/batch-delete/{entityId}",
+      consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   ResponseEntity<Void> batchDelete(
-      @RequestBody MultipartFile multipartFile, @PathVariable Long entityId);
+      @RequestParam("file") MultipartFile file, @PathVariable Long entityId);
 }

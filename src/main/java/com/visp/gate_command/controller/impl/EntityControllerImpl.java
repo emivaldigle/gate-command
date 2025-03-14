@@ -19,27 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 @Loggable
 public class EntityControllerImpl implements EntityController {
 
-  private final EntityService residencyService;
+  private final EntityService entityService;
 
   @Override
   public ResponseEntity<EntityDto> save(@RequestBody @Valid EntityDto entityDto) {
-    return ResponseEntity.ok(residencyService.create(entityDto));
+    return ResponseEntity.ok(entityService.create(entityDto));
   }
 
   @Override
   public ResponseEntity<List<EntityDto>> retrieveAll() {
-    return ResponseEntity.ok(residencyService.getAll());
+    return ResponseEntity.ok(entityService.getAll());
   }
 
   @Override
   public ResponseEntity<Void> delete(@PathVariable Long id) {
-    residencyService.delete(id);
+    entityService.delete(id);
     return ResponseEntity.accepted().build();
   }
 
   @Override
   public ResponseEntity<EntityDto> update(@RequestBody @Valid EntityDto entityDto) {
-    Optional<EntityDto> entityDtoOptional = residencyService.update(entityDto);
+    Optional<EntityDto> entityDtoOptional = entityService.update(entityDto);
     if (entityDtoOptional.isEmpty()) {
       throw new NotFoundException("User not found");
     }
