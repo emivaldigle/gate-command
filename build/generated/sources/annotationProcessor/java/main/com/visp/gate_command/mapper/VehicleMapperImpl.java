@@ -3,6 +3,7 @@ package com.visp.gate_command.mapper;
 import com.visp.gate_command.domain.dto.EntityDto;
 import com.visp.gate_command.domain.dto.UserDto;
 import com.visp.gate_command.domain.dto.VehicleDto;
+import com.visp.gate_command.domain.dto.VehicleSummaryDto;
 import com.visp.gate_command.domain.entity.Entity;
 import com.visp.gate_command.domain.entity.User;
 import com.visp.gate_command.domain.entity.Vehicle;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-14T01:02:10-0300",
+    date = "2025-03-14T19:16:31-0300",
     comments = "version: 1.6.3, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.1.jar, environment: Java 21.0.6 (Ubuntu)"
 )
 @Component
@@ -40,15 +41,30 @@ public class VehicleMapperImpl implements VehicleMapper {
             return null;
         }
 
-        VehicleDto vehicleDto = new VehicleDto();
+        VehicleDto.VehicleDtoBuilder vehicleDto = VehicleDto.builder();
 
-        vehicleDto.setId( vehicle.getId() );
-        vehicleDto.setUser( userToUserDto( vehicle.getUser() ) );
-        vehicleDto.setPlate( vehicle.getPlate() );
-        vehicleDto.setCreatedAt( vehicle.getCreatedAt() );
-        vehicleDto.setVehicleType( vehicle.getVehicleType() );
+        vehicleDto.id( vehicle.getId() );
+        vehicleDto.user( userToUserDto( vehicle.getUser() ) );
+        vehicleDto.plate( vehicle.getPlate() );
+        vehicleDto.createdAt( vehicle.getCreatedAt() );
+        vehicleDto.vehicleType( vehicle.getVehicleType() );
 
-        return vehicleDto;
+        return vehicleDto.build();
+    }
+
+    @Override
+    public VehicleSummaryDto toVehicleSummaryDto(Vehicle vehicle) {
+        if ( vehicle == null ) {
+            return null;
+        }
+
+        VehicleSummaryDto.VehicleSummaryDtoBuilder vehicleSummaryDto = VehicleSummaryDto.builder();
+
+        vehicleSummaryDto.plate( vehicle.getPlate() );
+
+        vehicleSummaryDto.isVisit( vehicle.getUser().getType() == com.visp.gate_command.domain.enums.UserType.VISIT );
+
+        return vehicleSummaryDto.build();
     }
 
     protected Entity entityDtoToEntity(EntityDto entityDto) {
@@ -69,6 +85,7 @@ public class VehicleMapperImpl implements VehicleMapper {
         entity.commune( entityDto.getCommune() );
         entity.syncIntervalMinutes( entityDto.getSyncIntervalMinutes() );
         entity.parkingHoursAllowed( entityDto.getParkingHoursAllowed() );
+        entity.visitSizeLimit( entityDto.getVisitSizeLimit() );
         entity.active( entityDto.isActive() );
         entity.createdAt( entityDto.getCreatedAt() );
         entity.lastUpdatedAt( entityDto.getLastUpdatedAt() );
@@ -90,8 +107,11 @@ public class VehicleMapperImpl implements VehicleMapper {
         user.setPhoneNumber( userDto.getPhoneNumber() );
         user.setEmail( userDto.getEmail() );
         user.setPassword( userDto.getPassword() );
+        user.setUnit( userDto.getUnit() );
         user.setType( userDto.getType() );
         user.setEntity( entityDtoToEntity( userDto.getEntity() ) );
+        user.setHasAssignedParking( userDto.getHasAssignedParking() );
+        user.setVisitDateTime( userDto.getVisitDateTime() );
         user.setCreatedAt( userDto.getCreatedAt() );
 
         return user;
@@ -115,6 +135,7 @@ public class VehicleMapperImpl implements VehicleMapper {
         entityDto.contactPhone( entity.getContactPhone() );
         entityDto.syncIntervalMinutes( entity.getSyncIntervalMinutes() );
         entityDto.parkingHoursAllowed( entity.getParkingHoursAllowed() );
+        entityDto.visitSizeLimit( entity.getVisitSizeLimit() );
         entityDto.active( entity.isActive() );
         entityDto.createdAt( entity.getCreatedAt() );
         entityDto.lastUpdatedAt( entity.getLastUpdatedAt() );
@@ -136,8 +157,11 @@ public class VehicleMapperImpl implements VehicleMapper {
         userDto.phoneNumber( user.getPhoneNumber() );
         userDto.email( user.getEmail() );
         userDto.password( user.getPassword() );
+        userDto.unit( user.getUnit() );
         userDto.type( user.getType() );
         userDto.entity( entityToEntityDto( user.getEntity() ) );
+        userDto.hasAssignedParking( user.getHasAssignedParking() );
+        userDto.visitDateTime( user.getVisitDateTime() );
         userDto.createdAt( user.getCreatedAt() );
 
         return userDto.build();

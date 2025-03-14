@@ -54,7 +54,11 @@ class EntityIntegrationTest {
     HttpEntity<EntityDto> updateRequest = new HttpEntity<>(Objects.requireNonNull(updatedDto));
     ResponseEntity<EntityDto> updateResponse =
         getAuthenticatedRestTemplate()
-            .exchange("/entities", HttpMethod.PATCH, updateRequest, EntityDto.class);
+            .exchange(
+                "/entities/" + createResponse.getBody().getId(),
+                HttpMethod.PATCH,
+                updateRequest,
+                EntityDto.class);
 
     // Assert: Verify update
     assertEquals(HttpStatus.OK, updateResponse.getStatusCode());

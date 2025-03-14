@@ -2,12 +2,12 @@ package com.visp.gate_command.integration;
 
 import static com.visp.gate_command.utils.TestObjectFactory.buildEntityDto;
 import static com.visp.gate_command.utils.TestObjectFactory.buildUserDto;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.visp.gate_command.domain.dto.EntityDto;
+import com.visp.gate_command.domain.enums.UserType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,9 @@ class UserIntegrationTest {
             post("/users")
                 .header(HttpHeaders.AUTHORIZATION, AUTH_HEADER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(buildUserDto(entityDto))))
+                .content(
+                    objectMapper.writeValueAsString(
+                        buildUserDto(entityDto, UserType.ADMINISTRATOR))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.name").value("John"))
         .andExpect(jsonPath("$.email").value("john.doe@example.com"));
@@ -68,7 +70,7 @@ class UserIntegrationTest {
   @Test
   void testBatchSaveWithCustomHeaders() throws Exception {
     // Arrange
-    String csvContent = "123,John,Doe,john@example.com,+123456789";
+    String csvContent = "123,John,Doe,john@example.com,+123456789, 1101, true";
     MockMultipartFile file =
         new MockMultipartFile("file", "test.csv", "csv", csvContent.getBytes());
 
@@ -89,7 +91,9 @@ class UserIntegrationTest {
             post("/users")
                 .header(HttpHeaders.AUTHORIZATION, AUTH_HEADER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(buildUserDto(entityDto))))
+                .content(
+                    objectMapper.writeValueAsString(
+                        buildUserDto(entityDto, UserType.ADMINISTRATOR))))
         .andExpect(status().isOk());
     // Arrange
     MockMultipartFile file =

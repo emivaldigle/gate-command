@@ -1,5 +1,6 @@
 package com.visp.gate_command.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.visp.gate_command.domain.enums.UserType;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -27,9 +28,17 @@ public class UserDto {
 
   private String password;
 
+  private String unit;
+
   private UserType type;
 
   private EntityDto entity;
 
+  private Boolean hasAssignedParking;
+
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private LocalDateTime visitDateTime;
+
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime createdAt;
 }

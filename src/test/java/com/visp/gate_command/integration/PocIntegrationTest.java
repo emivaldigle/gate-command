@@ -62,7 +62,11 @@ class PocIntegrationTest {
 
     ResponseEntity<PocDto> patchResponse =
         getAuthenticatedRestTemplate()
-            .exchange("/pocs", HttpMethod.PATCH, new HttpEntity<>(createdPocDto), PocDto.class);
+            .exchange(
+                "/pocs/" + createdPocDto.getId(),
+                HttpMethod.PATCH,
+                new HttpEntity<>(createdPocDto),
+                PocDto.class);
 
     assertEquals(HttpStatus.OK, patchResponse.getStatusCode());
     assertEquals("Updated Name", Objects.requireNonNull(patchResponse.getBody()).getName());

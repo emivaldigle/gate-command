@@ -68,7 +68,7 @@ class UserServiceImplTest {
   void testLoadUsersWithCSVFile() throws Exception {
     // Arrange
     Long entityId = 1L;
-    String csvContent = "123,John,Doe,john@example.com,+123456789";
+    String csvContent = "123,John,Doe,john@example.com,+123456789, 1101, true";
     InputStream inputStream = new ByteArrayInputStream(csvContent.getBytes());
 
     MultipartFile file = mock(MultipartFile.class);
@@ -144,7 +144,8 @@ class UserServiceImplTest {
       row.createCell(2).setCellValue("Doe");
       row.createCell(3).setCellValue("john@example.com");
       row.createCell(4).setCellValue("+123456789");
-
+      row.createCell(5).setCellValue("1101");
+      row.createCell(6).setCellValue("true");
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       workbook.write(outputStream);
       return outputStream.toByteArray();

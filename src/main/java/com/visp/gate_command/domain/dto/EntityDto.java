@@ -1,5 +1,8 @@
 package com.visp.gate_command.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +17,8 @@ public class EntityDto {
 
   private Long id;
 
+  @NotEmpty
+  @Size(min = 2, max = 20)
   private String name;
 
   private String type;
@@ -33,7 +38,14 @@ public class EntityDto {
   private int syncIntervalMinutes;
 
   private int parkingHoursAllowed;
+
+  private int visitSizeLimit;
+
   private boolean active;
+
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime createdAt;
+
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime lastUpdatedAt;
 }

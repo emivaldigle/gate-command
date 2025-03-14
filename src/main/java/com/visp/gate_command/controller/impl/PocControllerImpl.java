@@ -22,7 +22,7 @@ public class PocControllerImpl implements PocController {
   }
 
   @Override
-  public ResponseEntity<PocDto> update(PocDto pocDto) {
+  public ResponseEntity<PocDto> update(PocDto pocDto, Long id) {
     return pocService
         .update(pocDto)
         .map(ResponseEntity::ok)

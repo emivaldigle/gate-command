@@ -1,6 +1,7 @@
 package com.visp.gate_command.aop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,10 +11,11 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class LoggingAspect {
 
   private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper;
 
   @Around(
       "@annotation(com.visp.gate_command.aop.Loggable) || @within(com.visp.gate_command.aop.Loggable)")

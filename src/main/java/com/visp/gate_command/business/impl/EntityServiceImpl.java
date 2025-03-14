@@ -44,7 +44,7 @@ public class EntityServiceImpl implements EntityService {
     if (optionalEntity.isEmpty()) {
       throw new NotFoundException("entity not found");
     }
-    repository.delete(optionalEntity.get());
+    repository.deleteById(id);
   }
 
   @Override

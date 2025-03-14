@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-14T01:02:10-0300",
+    date = "2025-03-14T18:09:26-0300",
     comments = "version: 1.6.3, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.1.jar, environment: Java 21.0.6 (Ubuntu)"
 )
 @Component
@@ -30,8 +30,11 @@ public class UserMapperImpl implements UserMapper {
         user.setPhoneNumber( userDto.getPhoneNumber() );
         user.setEmail( userDto.getEmail() );
         user.setPassword( userDto.getPassword() );
+        user.setUnit( userDto.getUnit() );
         user.setType( userDto.getType() );
         user.setEntity( entityDtoToEntity( userDto.getEntity() ) );
+        user.setHasAssignedParking( userDto.getHasAssignedParking() );
+        user.setVisitDateTime( userDto.getVisitDateTime() );
         user.setCreatedAt( userDto.getCreatedAt() );
 
         return user;
@@ -52,8 +55,11 @@ public class UserMapperImpl implements UserMapper {
         userDto.phoneNumber( user.getPhoneNumber() );
         userDto.email( user.getEmail() );
         userDto.password( user.getPassword() );
+        userDto.unit( user.getUnit() );
         userDto.type( user.getType() );
         userDto.entity( entityToEntityDto( user.getEntity() ) );
+        userDto.hasAssignedParking( user.getHasAssignedParking() );
+        userDto.visitDateTime( user.getVisitDateTime() );
         userDto.createdAt( user.getCreatedAt() );
 
         return userDto.build();
@@ -77,6 +83,7 @@ public class UserMapperImpl implements UserMapper {
         entity.commune( entityDto.getCommune() );
         entity.syncIntervalMinutes( entityDto.getSyncIntervalMinutes() );
         entity.parkingHoursAllowed( entityDto.getParkingHoursAllowed() );
+        entity.visitSizeLimit( entityDto.getVisitSizeLimit() );
         entity.active( entityDto.isActive() );
         entity.createdAt( entityDto.getCreatedAt() );
         entity.lastUpdatedAt( entityDto.getLastUpdatedAt() );
@@ -102,6 +109,7 @@ public class UserMapperImpl implements UserMapper {
         entityDto.contactPhone( entity.getContactPhone() );
         entityDto.syncIntervalMinutes( entity.getSyncIntervalMinutes() );
         entityDto.parkingHoursAllowed( entity.getParkingHoursAllowed() );
+        entityDto.visitSizeLimit( entity.getVisitSizeLimit() );
         entityDto.active( entity.isActive() );
         entityDto.createdAt( entity.getCreatedAt() );
         entityDto.lastUpdatedAt( entity.getLastUpdatedAt() );
