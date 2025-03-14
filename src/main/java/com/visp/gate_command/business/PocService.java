@@ -12,6 +12,4 @@ public interface PocService {
   void delete(Long id);
 
   List<PocDto> retrievePocByEntity(Long entityId);
-
-  List<PocDto> retrievePocByEntityAndStatus(Long entityId, String status);
 }

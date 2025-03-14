@@ -37,15 +37,20 @@ public class Poc {
   private PocType type;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "residency_id", nullable = false)
+  @JoinColumn(name = "entity_id", nullable = false)
   private Entity entity;
 
+  @Column(nullable = false)
   private String location;
 
+  @Column(nullable = false)
   private LocalDateTime lastSync;
 
   @Column(nullable = false, updatable = false)
-  private LocalDateTime createdAt = LocalDateTime.now();
+  private LocalDateTime createdAt;
+
+  @Column(nullable = false)
+  private Boolean active;
 
   ;
 }

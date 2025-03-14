@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -50,4 +51,13 @@ public class Entity {
 
   @Column(nullable = false)
   private int parkingHoursAllowed;
+
+  @Column(nullable = false)
+  private boolean active;
+
+  @Column(nullable = false, updatable = false)
+  private LocalDateTime createdAt;
+
+  @Column(nullable = false)
+  private LocalDateTime lastUpdatedAt;
 }

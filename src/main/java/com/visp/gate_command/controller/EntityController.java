@@ -32,7 +32,7 @@ public interface EntityController {
                     schema = @Schema(implementation = EntityDto.class))),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
       })
-  @PostMapping("/entities/save")
+  @PostMapping("/entities")
   ResponseEntity<EntityDto> save(@RequestBody @Valid EntityDto entityDto);
 
   @Operation(

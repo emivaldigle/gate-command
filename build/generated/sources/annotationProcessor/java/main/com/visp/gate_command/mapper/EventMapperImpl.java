@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-13T01:35:29-0300",
+    date = "2025-03-13T23:58:33-0300",
     comments = "version: 1.6.3, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.1.jar, environment: Java 21.0.6 (Ubuntu)"
 )
 @Component
@@ -69,6 +69,9 @@ public class EventMapperImpl implements EventMapper {
         entity.commune( entityDto.getCommune() );
         entity.syncIntervalMinutes( entityDto.getSyncIntervalMinutes() );
         entity.parkingHoursAllowed( entityDto.getParkingHoursAllowed() );
+        entity.active( entityDto.isActive() );
+        entity.createdAt( entityDto.getCreatedAt() );
+        entity.lastUpdatedAt( entityDto.getLastUpdatedAt() );
 
         return entity.build();
     }
@@ -88,6 +91,7 @@ public class EventMapperImpl implements EventMapper {
         poc.setLocation( pocDto.getLocation() );
         poc.setLastSync( pocDto.getLastSync() );
         poc.setCreatedAt( pocDto.getCreatedAt() );
+        poc.setActive( pocDto.isActive() );
 
         return poc;
     }
@@ -97,21 +101,24 @@ public class EventMapperImpl implements EventMapper {
             return null;
         }
 
-        EntityDto entityDto = new EntityDto();
+        EntityDto.EntityDtoBuilder entityDto = EntityDto.builder();
 
-        entityDto.setId( entity.getId() );
-        entityDto.setName( entity.getName() );
-        entityDto.setType( entity.getType() );
-        entityDto.setAddress( entity.getAddress() );
-        entityDto.setRegion( entity.getRegion() );
-        entityDto.setCity( entity.getCity() );
-        entityDto.setCommune( entity.getCommune() );
-        entityDto.setTaxId( entity.getTaxId() );
-        entityDto.setContactPhone( entity.getContactPhone() );
-        entityDto.setSyncIntervalMinutes( entity.getSyncIntervalMinutes() );
-        entityDto.setParkingHoursAllowed( entity.getParkingHoursAllowed() );
+        entityDto.id( entity.getId() );
+        entityDto.name( entity.getName() );
+        entityDto.type( entity.getType() );
+        entityDto.address( entity.getAddress() );
+        entityDto.region( entity.getRegion() );
+        entityDto.city( entity.getCity() );
+        entityDto.commune( entity.getCommune() );
+        entityDto.taxId( entity.getTaxId() );
+        entityDto.contactPhone( entity.getContactPhone() );
+        entityDto.syncIntervalMinutes( entity.getSyncIntervalMinutes() );
+        entityDto.parkingHoursAllowed( entity.getParkingHoursAllowed() );
+        entityDto.active( entity.isActive() );
+        entityDto.createdAt( entity.getCreatedAt() );
+        entityDto.lastUpdatedAt( entity.getLastUpdatedAt() );
 
-        return entityDto;
+        return entityDto.build();
     }
 
     protected PocDto pocToPocDto(Poc poc) {
@@ -119,17 +126,20 @@ public class EventMapperImpl implements EventMapper {
             return null;
         }
 
-        PocDto pocDto = new PocDto();
+        PocDto.PocDtoBuilder pocDto = PocDto.builder();
 
-        pocDto.setId( poc.getId() );
-        pocDto.setIdentifier( poc.getIdentifier() );
-        pocDto.setName( poc.getName() );
-        pocDto.setType( poc.getType() );
-        pocDto.setEntity( entityToEntityDto( poc.getEntity() ) );
-        pocDto.setLocation( poc.getLocation() );
-        pocDto.setLastSync( poc.getLastSync() );
-        pocDto.setCreatedAt( poc.getCreatedAt() );
+        pocDto.id( poc.getId() );
+        pocDto.identifier( poc.getIdentifier() );
+        pocDto.name( poc.getName() );
+        pocDto.type( poc.getType() );
+        pocDto.entity( entityToEntityDto( poc.getEntity() ) );
+        pocDto.location( poc.getLocation() );
+        pocDto.lastSync( poc.getLastSync() );
+        pocDto.createdAt( poc.getCreatedAt() );
+        if ( poc.getActive() != null ) {
+            pocDto.active( poc.getActive() );
+        }
 
-        return pocDto;
+        return pocDto.build();
     }
 }

@@ -26,6 +26,12 @@
             <column name="status" type="VARCHAR(100)">
                 <constraints nullable="true"/>
             </column>
+            <column name="active" type="BOOLEAN">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
             <column name="last_sync" type="TIMESTAMP">
                 <constraints nullable="true"/>
             </column>

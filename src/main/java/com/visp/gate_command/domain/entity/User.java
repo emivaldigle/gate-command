@@ -48,6 +48,6 @@ public class User {
   @JoinColumn(name = "entity_id", nullable = false)
   private Entity entity;
 
-  private LocalDateTime createdAt = LocalDateTime.now();
-  ;
+  @Column(nullable = false)
+  private LocalDateTime createdAt;
 }

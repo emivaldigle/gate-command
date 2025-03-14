@@ -7,6 +7,7 @@ import com.visp.gate_command.domain.entity.Entity;
 import com.visp.gate_command.exception.NotFoundException;
 import com.visp.gate_command.mapper.EntityMapper;
 import com.visp.gate_command.repository.EntityRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,8 @@ public class EntityServiceImpl implements EntityService {
 
   @Override
   public EntityDto create(EntityDto entityDto) {
+    entityDto.setCreatedAt(LocalDateTime.now());
+    entityDto.setLastUpdatedAt(LocalDateTime.now());
     Entity entity = mapper.toEntity(entityDto);
     return mapper.toDto(repository.save(entity));
   }

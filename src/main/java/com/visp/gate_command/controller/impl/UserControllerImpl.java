@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,15 +26,16 @@ public class UserControllerImpl implements UserController {
   }
 
   @Override
-  public ResponseEntity<Void> batchSAve(MultipartFile multipartFile, @PathVariable Long entityId) {
-    userService.loadUsersWithFile(multipartFile, entityId);
+  public ResponseEntity<Void> batchSave(
+      @RequestParam("file") MultipartFile file, @PathVariable Long entityId) {
+    userService.loadUsersWithFile(file, entityId);
     return ResponseEntity.accepted().build();
   }
 
   @Override
   public ResponseEntity<Void> batchDelete(
-      MultipartFile multipartFile, @PathVariable Long entityId) {
-    userService.loadUsersWithFile(multipartFile, entityId);
+      @RequestParam("file") MultipartFile file, @PathVariable Long entityId) {
+    userService.deactivateUsersWithFile(file, entityId);
     return ResponseEntity.accepted().build();
   }
 }
