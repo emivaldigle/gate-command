@@ -17,32 +17,39 @@ import org.springframework.stereotype.Service;
 @Loggable
 public class ParkingServiceImpl implements ParkingService {
   private final ParkingMapper parkingMapper;
-  private final ParkingRepository visitRepository;
+  private final ParkingRepository parkingRepository;
 
   @Override
   public ParkingDto create(ParkingDto parkingDto) {
     parkingDto.setCreatedAt(LocalDateTime.now());
-    return parkingMapper.toDto(visitRepository.save(parkingMapper.toEntity(parkingDto)));
+    return parkingMapper.toDto(parkingRepository.save(parkingMapper.toEntity(parkingDto)));
   }
 
   @Override
   public Optional<ParkingDto> update(ParkingDto visitDto) {
-    final var optionalVisit = visitRepository.findById(visitDto.getId());
-    if (optionalVisit.isEmpty()) {
+    final var optionalParking = parkingRepository.findById(visitDto.getId());
+    if (optionalParking.isEmpty()) {
       throw new NotFoundException(String.format("parking with id %s not found", visitDto.getId()));
     }
-    return Optional.of(parkingMapper.toDto(visitRepository.save(parkingMapper.toEntity(visitDto))));
+    return Optional.of(
+        parkingMapper.toDto(parkingRepository.save(parkingMapper.toEntity(visitDto))));
   }
 
   @Override
   public List<ParkingDto> getAllByEntity(Long entityId) {
-    return visitRepository.findAllByUserEntityId(entityId).stream()
+    return parkingRepository.findAllByUserEntityId(entityId).stream()
         .map(parkingMapper::toDto)
         .toList();
   }
 
   @Override
   public List<ParkingDto> getAllByUser(Long userId) {
-    return visitRepository.findAllByUserId(userId).stream().map(parkingMapper::toDto).toList();
+    return parkingRepository.findAllByUserId(userId).stream().map(parkingMapper::toDto).toList();
+  }
+
+  @Override
+  public Optional<ParkingDto> findByCurrentLicensePlate(String currentLicensePlate) {
+    final var optionalParking = parkingRepository.findByCurrentLicensePlate(currentLicensePlate);
+      return optionalParking.map(parkingMapper::toDto);
   }
 }

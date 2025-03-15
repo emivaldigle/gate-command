@@ -1,5 +1,6 @@
 package com.visp.gate_command.controller.impl;
 
+import com.visp.gate_command.aop.Loggable;
 import com.visp.gate_command.business.VehicleService;
 import com.visp.gate_command.controller.VehicleController;
 import com.visp.gate_command.domain.dto.VehicleDto;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Loggable
 public class VehicleControllerImpl implements VehicleController {
 
   private final VehicleService vehicleService;
@@ -48,5 +50,13 @@ public class VehicleControllerImpl implements VehicleController {
   @Override
   public ResponseEntity<List<VehicleSummaryDto>> getAllSummariesByEntity(Long entityId) {
     return ResponseEntity.ok(vehicleService.getAllSummariesByEntity(entityId));
+  }
+
+  @Override
+  public ResponseEntity<VehicleDto> findByPlateAndEntityId(String licensePlate) {
+    return ResponseEntity.ok(
+        vehicleService
+            .findByLicensePlate(licensePlate)
+            .orElseThrow(() -> new RuntimeException("Vehicle not found")));
   }
 }

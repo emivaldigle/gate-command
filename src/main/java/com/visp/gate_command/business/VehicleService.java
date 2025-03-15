@@ -17,4 +17,6 @@ public interface VehicleService {
   List<VehicleDto> getAllByEntity(Long entityId);
 
   List<VehicleSummaryDto> getAllSummariesByEntity(Long entityId);
+
+  Optional<VehicleDto> findByLicensePlate(String licensePlate);
 }

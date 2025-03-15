@@ -41,6 +41,8 @@ public class EntityDto {
 
   private int visitSizeLimit;
 
+  private int parkingSizeLimit;
+
   private boolean active;
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

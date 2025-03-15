@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehicleSummaryDto {
+  private Long userId;
   private String plate;
   private boolean isVisit;
 }

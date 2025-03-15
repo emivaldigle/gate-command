@@ -18,6 +18,8 @@ public class ParkingDto {
 
   private String identifier;
 
+  private String currentLicensePlate;
+
   private Boolean isForVisit;
 
   private Boolean available;

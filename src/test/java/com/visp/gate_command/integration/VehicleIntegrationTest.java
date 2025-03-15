@@ -115,7 +115,8 @@ class VehicleIntegrationTest {
     ResponseEntity<VehicleDto[]> getResponse =
         getAuthenticatedRestTemplate()
             .getForEntity(
-                "/vehicles/user/" + Objects.requireNonNull(createUserResponse.getBody()).getId(),
+                "/vehicles/find-by-user/"
+                    + Objects.requireNonNull(createUserResponse.getBody()).getId(),
                 VehicleDto[].class);
 
     // Assert: Verificar la recuperación
@@ -134,7 +135,7 @@ class VehicleIntegrationTest {
     ResponseEntity<VehicleDto[]> getResponse =
         getAuthenticatedRestTemplate()
             .getForEntity(
-                "/vehicles/entity/"
+                "/vehicles/find-by-entity/"
                     + Objects.requireNonNull(createEntityResponse.getBody()).getId(),
                 VehicleDto[].class);
 
