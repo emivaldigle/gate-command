@@ -39,4 +39,10 @@ public class ParkingControllerImpl implements ParkingController {
   public ResponseEntity<List<ParkingDto>> getAllByUser(Long userId) {
     return ResponseEntity.ok(visitService.getAllByUser(userId));
   }
+
+  @Override
+  public ResponseEntity<Void> seed(Long entityId) {
+    visitService.seed(entityId);
+    return ResponseEntity.accepted().build();
+  }
 }

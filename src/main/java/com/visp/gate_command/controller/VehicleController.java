@@ -68,9 +68,9 @@ public interface VehicleController {
                 @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = VehicleDto.class, type = "array"))),
-        @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
       })
-  @GetMapping("/user/{userId}")
+  @GetMapping("/find-by-user/{userId}")
   ResponseEntity<List<VehicleDto>> getByUserId(@PathVariable Long userId);
 
   @Operation(
@@ -84,9 +84,9 @@ public interface VehicleController {
                 @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = VehicleDto.class, type = "array"))),
-        @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
       })
-  @GetMapping("/entity/{entityId}")
+  @GetMapping("/find-by-entity/{entityId}")
   ResponseEntity<List<VehicleDto>> getAllByEntity(@PathVariable Long entityId);
 
   @Operation(
@@ -101,8 +101,25 @@ public interface VehicleController {
                 @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = VehicleSummaryDto.class, type = "array"))),
-        @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
+        @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
       })
-  @GetMapping("/entity/{entityId}/summaries")
+  @GetMapping("/{entityId}/summaries")
   ResponseEntity<List<VehicleSummaryDto>> getAllSummariesByEntity(@PathVariable Long entityId);
+
+  @Operation(
+      summary = "Get all vehicle summaries by entity",
+      description =
+          "Retrieves summarized information about all vehicles associated with a specific entity",
+      responses = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Vehicle summaries retrieved successfully",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = VehicleSummaryDto.class, type = "array"))),
+        @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
+      })
+  @GetMapping("/find-by-plate")
+  ResponseEntity<VehicleDto> findByPlateAndEntityId(@RequestParam String licensePlate);
 }

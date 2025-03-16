@@ -61,4 +61,14 @@ public class VehicleServiceImpl implements VehicleService {
     final List<Vehicle> vehiclesByEntity = vehicleRepository.findByUserEntityId(entityId);
     return vehiclesByEntity.stream().map(vehicleMapper::toVehicleSummaryDto).toList();
   }
+
+  @Override
+  public Optional<VehicleDto> findByLicensePlate(String licensePlate) {
+    final Optional<Vehicle> optionalVehicle = vehicleRepository.findByPlate(licensePlate);
+    if (optionalVehicle.isEmpty()) {
+      throw new NotFoundException(
+          String.format("vehicle with license plate %s no found", licensePlate));
+    }
+    return Optional.of(vehicleMapper.toDto(optionalVehicle.get()));
+  }
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-14T19:16:31-0300",
+    date = "2025-03-15T11:26:56-0300",
     comments = "version: 1.6.3, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.1.jar, environment: Java 21.0.6 (Ubuntu)"
 )
 @Component
@@ -60,6 +60,7 @@ public class VehicleMapperImpl implements VehicleMapper {
 
         VehicleSummaryDto.VehicleSummaryDtoBuilder vehicleSummaryDto = VehicleSummaryDto.builder();
 
+        vehicleSummaryDto.userId( vehicleUserId( vehicle ) );
         vehicleSummaryDto.plate( vehicle.getPlate() );
 
         vehicleSummaryDto.isVisit( vehicle.getUser().getType() == com.visp.gate_command.domain.enums.UserType.VISIT );
@@ -86,6 +87,7 @@ public class VehicleMapperImpl implements VehicleMapper {
         entity.syncIntervalMinutes( entityDto.getSyncIntervalMinutes() );
         entity.parkingHoursAllowed( entityDto.getParkingHoursAllowed() );
         entity.visitSizeLimit( entityDto.getVisitSizeLimit() );
+        entity.parkingSizeLimit( entityDto.getParkingSizeLimit() );
         entity.active( entityDto.isActive() );
         entity.createdAt( entityDto.getCreatedAt() );
         entity.lastUpdatedAt( entityDto.getLastUpdatedAt() );
@@ -136,6 +138,7 @@ public class VehicleMapperImpl implements VehicleMapper {
         entityDto.syncIntervalMinutes( entity.getSyncIntervalMinutes() );
         entityDto.parkingHoursAllowed( entity.getParkingHoursAllowed() );
         entityDto.visitSizeLimit( entity.getVisitSizeLimit() );
+        entityDto.parkingSizeLimit( entity.getParkingSizeLimit() );
         entityDto.active( entity.isActive() );
         entityDto.createdAt( entity.getCreatedAt() );
         entityDto.lastUpdatedAt( entity.getLastUpdatedAt() );
@@ -165,5 +168,13 @@ public class VehicleMapperImpl implements VehicleMapper {
         userDto.createdAt( user.getCreatedAt() );
 
         return userDto.build();
+    }
+
+    private Long vehicleUserId(Vehicle vehicle) {
+        User user = vehicle.getUser();
+        if ( user == null ) {
+            return null;
+        }
+        return user.getId();
     }
 }

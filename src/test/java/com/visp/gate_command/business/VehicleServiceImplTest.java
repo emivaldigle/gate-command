@@ -187,7 +187,7 @@ class VehicleServiceImplTest {
     vehicle.setId(1L);
     vehicle.setPlate("ABC123");
 
-    VehicleSummaryDto summaryDto = new VehicleSummaryDto("ABC123", false);
+    VehicleSummaryDto summaryDto = new VehicleSummaryDto(1L, "ABC123", false);
 
     when(vehicleRepository.findByUserEntityId(entityId)).thenReturn(List.of(vehicle));
     when(vehicleMapper.toVehicleSummaryDto(vehicle)).thenReturn(summaryDto);

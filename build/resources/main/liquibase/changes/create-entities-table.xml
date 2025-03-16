@@ -41,6 +41,9 @@
             <column name="visit_size_limit" type="INTEGER" defaultValue="24">
                 <constraints nullable="false"/>
             </column>
+            <column name="parking_size_limit" type="INTEGER" defaultValue="24">
+                <constraints nullable="false"/>
+            </column>
             <column name="created_at" type="TIMESTAMP">
                 <constraints nullable="true"/>
             </column>

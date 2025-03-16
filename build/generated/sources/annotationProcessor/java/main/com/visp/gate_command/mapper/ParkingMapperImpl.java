@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-14T18:09:26-0300",
+    date = "2025-03-15T12:03:25-0300",
     comments = "version: 1.6.3, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.1.jar, environment: Java 21.0.6 (Ubuntu)"
 )
 @Component
@@ -25,9 +25,11 @@ public class ParkingMapperImpl implements ParkingMapper {
 
         Parking parking = new Parking();
 
+        parking.setEntity( parkingDtoToEntity( parkingDto ) );
         parking.setId( parkingDto.getId() );
         parking.setUser( userDtoToUser( parkingDto.getUser() ) );
         parking.setIdentifier( parkingDto.getIdentifier() );
+        parking.setCurrentLicensePlate( parkingDto.getCurrentLicensePlate() );
         parking.setIsForVisit( parkingDto.getIsForVisit() );
         parking.setAvailable( parkingDto.getAvailable() );
         parking.setCreatedAt( parkingDto.getCreatedAt() );
@@ -44,15 +46,29 @@ public class ParkingMapperImpl implements ParkingMapper {
 
         ParkingDto.ParkingDtoBuilder parkingDto = ParkingDto.builder();
 
+        parkingDto.entityId( parkingEntityId( parking ) );
         parkingDto.id( parking.getId() );
         parkingDto.user( userToUserDto( parking.getUser() ) );
         parkingDto.identifier( parking.getIdentifier() );
+        parkingDto.currentLicensePlate( parking.getCurrentLicensePlate() );
         parkingDto.isForVisit( parking.getIsForVisit() );
         parkingDto.available( parking.getAvailable() );
         parkingDto.createdAt( parking.getCreatedAt() );
         parkingDto.expirationDate( parking.getExpirationDate() );
 
         return parkingDto.build();
+    }
+
+    protected Entity parkingDtoToEntity(ParkingDto parkingDto) {
+        if ( parkingDto == null ) {
+            return null;
+        }
+
+        Entity.EntityBuilder entity = Entity.builder();
+
+        entity.id( parkingDto.getEntityId() );
+
+        return entity.build();
     }
 
     protected Entity entityDtoToEntity(EntityDto entityDto) {
@@ -74,6 +90,7 @@ public class ParkingMapperImpl implements ParkingMapper {
         entity.syncIntervalMinutes( entityDto.getSyncIntervalMinutes() );
         entity.parkingHoursAllowed( entityDto.getParkingHoursAllowed() );
         entity.visitSizeLimit( entityDto.getVisitSizeLimit() );
+        entity.parkingSizeLimit( entityDto.getParkingSizeLimit() );
         entity.active( entityDto.isActive() );
         entity.createdAt( entityDto.getCreatedAt() );
         entity.lastUpdatedAt( entityDto.getLastUpdatedAt() );
@@ -105,6 +122,14 @@ public class ParkingMapperImpl implements ParkingMapper {
         return user;
     }
 
+    private Long parkingEntityId(Parking parking) {
+        Entity entity = parking.getEntity();
+        if ( entity == null ) {
+            return null;
+        }
+        return entity.getId();
+    }
+
     protected EntityDto entityToEntityDto(Entity entity) {
         if ( entity == null ) {
             return null;
@@ -124,6 +149,7 @@ public class ParkingMapperImpl implements ParkingMapper {
         entityDto.syncIntervalMinutes( entity.getSyncIntervalMinutes() );
         entityDto.parkingHoursAllowed( entity.getParkingHoursAllowed() );
         entityDto.visitSizeLimit( entity.getVisitSizeLimit() );
+        entityDto.parkingSizeLimit( entity.getParkingSizeLimit() );
         entityDto.active( entity.isActive() );
         entityDto.createdAt( entity.getCreatedAt() );
         entityDto.lastUpdatedAt( entity.getLastUpdatedAt() );

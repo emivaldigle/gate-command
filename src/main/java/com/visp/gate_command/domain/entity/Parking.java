@@ -31,8 +31,14 @@ public class Parking {
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "entity_id", nullable = false)
+  private com.visp.gate_command.domain.entity.Entity entity;
+
   @Column(nullable = false)
   private String identifier;
+
+  @Column private String currentLicensePlate;
 
   @Column(nullable = false)
   private Boolean isForVisit;

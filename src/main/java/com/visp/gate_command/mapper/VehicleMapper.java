@@ -17,5 +17,6 @@ public interface VehicleMapper {
       target = "isVisit",
       expression =
           "java(vehicle.getUser().getType() == com.visp.gate_command.domain.enums.UserType.VISIT)")
+  @Mapping(target = "userId", source = "user.id")
   VehicleSummaryDto toVehicleSummaryDto(Vehicle vehicle);
 }

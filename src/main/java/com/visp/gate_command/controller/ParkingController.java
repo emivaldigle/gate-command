@@ -77,4 +77,20 @@ public interface ParkingController {
       })
   @GetMapping("/find-by-user/{userId}")
   ResponseEntity<List<ParkingDto>> getAllByUser(@PathVariable Long userId);
+
+  @Operation(
+      summary = "Seed parking within an entity",
+      description = "Generates empty parking within an entity",
+      responses = {
+        @ApiResponse(
+            responseCode = "202",
+            description = "parking created successfully",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ParkingDto.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
+      })
+  @PostMapping("/seed/{entityId}")
+  ResponseEntity<Void> seed(@PathVariable Long entityId);
 }
