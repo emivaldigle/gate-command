@@ -4,6 +4,7 @@ import com.visp.gate_command.aop.Loggable;
 import com.visp.gate_command.business.EntityService;
 import com.visp.gate_command.controller.EntityController;
 import com.visp.gate_command.domain.dto.EntityDto;
+import com.visp.gate_command.exception.NotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,14 @@ public class EntityControllerImpl implements EntityController {
   @Override
   public ResponseEntity<List<EntityDto>> retrieveAll() {
     return ResponseEntity.ok(entityService.getAll());
+  }
+
+  @Override
+  public ResponseEntity<EntityDto> findById(Long id) {
+    return entityService
+        .findById(id)
+        .map(ResponseEntity::ok)
+        .orElseThrow(() -> new NotFoundException("Entity not found"));
   }
 
   @Override

@@ -54,6 +54,22 @@ public interface EntityController {
   ResponseEntity<List<EntityDto>> retrieveAll();
 
   @Operation(
+      summary = "Retrieve an entity by id",
+      description = "Fetches an entity by provided id",
+      responses = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Entities retrieved successfully",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntityDto.class))),
+        @ApiResponse(responseCode = "404", description = "No entities found", content = @Content)
+      })
+  @GetMapping("/{id}")
+  ResponseEntity<EntityDto> findById(@PathVariable Long id);
+
+  @Operation(
       summary = "Delete an entity by ID",
       description = "Deletes an entity from the system based on its ID",
       responses = {

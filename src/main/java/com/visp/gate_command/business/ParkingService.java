@@ -14,4 +14,6 @@ public interface ParkingService {
   List<ParkingDto> getAllByUser(Long userId);
 
   Optional<ParkingDto> findByCurrentLicensePlate(String currentLicensePlate);
+
+  void seed(Long entityId);
 }

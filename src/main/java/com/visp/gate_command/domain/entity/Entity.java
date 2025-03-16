@@ -1,5 +1,6 @@
 package com.visp.gate_command.domain.entity;
 
+import com.visp.gate_command.domain.enums.EntityType;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +27,7 @@ public class Entity {
   private String name;
 
   @Column(nullable = false)
-  private String type;
+  private EntityType type;
 
   @Column(nullable = false)
   private String address;

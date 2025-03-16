@@ -8,7 +8,6 @@ import com.visp.gate_command.domain.dto.ParkingDto;
 import com.visp.gate_command.domain.enums.UserType;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +23,12 @@ public class AccessAuthorizationServiceImpl implements AccessAuthorizationServic
         .findByLicensePlate(licensePlate)
         .map(
             vehicle -> {
-              Optional<ParkingDto> currentParking =  parkingService.findByCurrentLicensePlate(licensePlate);
+              Optional<ParkingDto> currentParking =
+                  parkingService.findByCurrentLicensePlate(licensePlate);
               boolean isAuthorized =
-                      currentParking.isPresent() ||
-                  parkingService.getAllByUser(vehicle.getUser().getId()).stream()
-                      .anyMatch(ParkingDto::getAvailable);
+                  currentParking.isPresent()
+                      || parkingService.getAllByUser(vehicle.getUser().getId()).stream()
+                          .anyMatch(ParkingDto::getAvailable);
 
               return buildResponse(isAuthorized, vehicle.getUser().getType());
             })

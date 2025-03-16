@@ -1,16 +1,11 @@
 package com.visp.gate_command.business.impl;
 
 import com.visp.gate_command.business.EventService;
-import com.visp.gate_command.business.ParkingService;
-import com.visp.gate_command.business.VehicleService;
 import com.visp.gate_command.domain.dto.EventDto;
-import com.visp.gate_command.domain.dto.ParkingDto;
-import com.visp.gate_command.domain.dto.VehicleDto;
-import com.visp.gate_command.domain.enums.EventType;
 import com.visp.gate_command.mapper.EventMapper;
 import com.visp.gate_command.repository.EventRepository;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +15,16 @@ public class EventServiceImpl implements EventService {
 
   private final EventRepository eventRepository;
   private final EventMapper eventMapper;
-  private final ParkingService parkingService;
-  private final VehicleService vehicleService;
 
   @Override
   public EventDto create(EventDto eventDto) {
-    return null;
+    return eventMapper.toDto(eventRepository.save(eventMapper.toEntity(eventDto)));
   }
 
   @Override
-  public List<EventDto> getAllByEntity(Long entityId) {
-    return List.of();
+  public List<EventDto> getAllByEntityAndDate(Long entityId, LocalDateTime from, LocalDateTime to) {
+    return eventRepository.findByPocEntityIdAndCreatedAtBetween(entityId, from, to).stream()
+        .map(eventMapper::toDto)
+        .toList();
   }
 }

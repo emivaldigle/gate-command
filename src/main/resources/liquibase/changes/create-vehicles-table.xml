@@ -9,7 +9,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="user_id" type="BIGINT">
-                <constraints nullable="false" foreignKeyName="fk_vehicles_users" referencedTableName="users" referencedColumnNames="id"/>
+                <constraints nullable="true" foreignKeyName="fk_vehicles_users" referencedTableName="users" referencedColumnNames="id"/>
             </column>
             <column name="plate" type="VARCHAR(20)">
                 <constraints nullable="false"/>
