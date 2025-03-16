@@ -3,18 +3,21 @@ package com.visp.gate_command.domain.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.visp.gate_command.domain.enums.EventType;
 import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class EventDto {
 
-  private Long id;
+  private UUID id;
 
-  private PocDto poc;
+  private Long pocId;
 
   private String plate;
 
