@@ -5,6 +5,7 @@ import com.visp.gate_command.domain.dto.ParkingDto;
 import com.visp.gate_command.domain.dto.PocDto;
 import com.visp.gate_command.domain.dto.UserDto;
 import com.visp.gate_command.domain.dto.VehicleDto;
+import com.visp.gate_command.domain.enums.EntityType;
 import com.visp.gate_command.domain.enums.PocType;
 import com.visp.gate_command.domain.enums.UserType;
 import com.visp.gate_command.domain.enums.VehicleType;
@@ -14,7 +15,7 @@ public class TestObjectFactory {
   public static EntityDto buildEntityDto() {
     return EntityDto.builder()
         .name("name")
-        .type("type")
+        .type(EntityType.COMMUNITY)
         .taxId("12345")
         .city("city")
         .address("address")
@@ -62,6 +63,7 @@ public class TestObjectFactory {
         .available(true)
         .expirationDate(null)
         .isForVisit(true)
+        .entityId(1L)
         .build();
   }
 

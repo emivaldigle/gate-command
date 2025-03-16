@@ -77,7 +77,7 @@ class ParkingServiceImplTest {
   @Test
   void testFindByEntityUser() {
     Long entityId = 1L;
-    when(parkingRepository.findAllByUserEntityId(entityId)).thenReturn(List.of(new Parking()));
+    when(parkingRepository.findAllByEntityId(entityId)).thenReturn(List.of(new Parking()));
     when(parkingMapper.toDto(any())).thenReturn(new ParkingDto());
     List<ParkingDto> parkingByEntity = parkingService.getAllByEntity(entityId);
     assertNotNull(parkingByEntity);
