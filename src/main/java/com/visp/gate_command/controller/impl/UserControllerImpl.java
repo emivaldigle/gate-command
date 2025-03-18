@@ -4,6 +4,7 @@ import com.visp.gate_command.aop.Loggable;
 import com.visp.gate_command.business.UserService;
 import com.visp.gate_command.controller.UserController;
 import com.visp.gate_command.domain.dto.UserDto;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,14 +24,19 @@ public class UserControllerImpl implements UserController {
   }
 
   @Override
-  public ResponseEntity<Void> batchSave(@RequestParam("file") MultipartFile file, Long entityId) {
+  public ResponseEntity<Void> batchSave(@RequestParam("file") MultipartFile file, UUID entityId) {
     userService.loadUsersWithFile(file, entityId);
     return ResponseEntity.accepted().build();
   }
 
   @Override
-  public ResponseEntity<Void> batchDelete(@RequestParam("file") MultipartFile file, Long entityId) {
+  public ResponseEntity<Void> batchDelete(@RequestParam("file") MultipartFile file, UUID entityId) {
     userService.deactivateUsersWithFile(file, entityId);
     return ResponseEntity.accepted().build();
+  }
+
+  @Override
+  public ResponseEntity<UserDto> update(UserDto userDto, UUID id) {
+    return ResponseEntity.ok(userService.update(userDto, id));
   }
 }

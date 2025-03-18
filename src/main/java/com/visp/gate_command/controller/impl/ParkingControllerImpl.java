@@ -5,6 +5,7 @@ import com.visp.gate_command.business.ParkingService;
 import com.visp.gate_command.controller.ParkingController;
 import com.visp.gate_command.domain.dto.ParkingDto;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,35 +15,41 @@ import org.springframework.web.bind.annotation.RestController;
 @Loggable
 public class ParkingControllerImpl implements ParkingController {
 
-  private final ParkingService visitService;
+  private final ParkingService parkingService;
 
   @Override
   public ResponseEntity<ParkingDto> create(ParkingDto parkingDto) {
-    return ResponseEntity.ok(visitService.create(parkingDto));
+    return ResponseEntity.ok(parkingService.create(parkingDto));
   }
 
   @Override
-  public ResponseEntity<ParkingDto> update(Long id, ParkingDto parkingDto) {
+  public ResponseEntity<ParkingDto> update(UUID id, ParkingDto parkingDto) {
     parkingDto.setId(id);
     return ResponseEntity.ok(
-        visitService
+        parkingService
             .update(parkingDto)
             .orElseThrow(() -> new RuntimeException("Parking not found")));
   }
 
   @Override
-  public ResponseEntity<List<ParkingDto>> getAllByEntity(Long entityId) {
-    return ResponseEntity.ok(visitService.getAllByEntity(entityId));
+  public ResponseEntity<List<ParkingDto>> getAllByEntity(UUID entityId) {
+    return ResponseEntity.ok(parkingService.getAllByEntity(entityId));
   }
 
   @Override
-  public ResponseEntity<List<ParkingDto>> getAllByUser(Long userId) {
-    return ResponseEntity.ok(visitService.getAllByUser(userId));
+  public ResponseEntity<List<ParkingDto>> getAllByUser(UUID userId) {
+    return ResponseEntity.ok(parkingService.getAllByUser(userId));
   }
 
   @Override
-  public ResponseEntity<Void> seed(Long entityId) {
-    visitService.seed(entityId);
+  public ResponseEntity<Void> seed(UUID entityId) {
+    parkingService.seed(entityId);
+    return ResponseEntity.accepted().build();
+  }
+
+  @Override
+  public ResponseEntity<Void> delete(UUID id) {
+    parkingService.delete(id);
     return ResponseEntity.accepted().build();
   }
 }

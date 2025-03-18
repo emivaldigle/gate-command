@@ -12,6 +12,7 @@ import com.visp.gate_command.repository.EntityRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,7 +35,7 @@ class EntityServiceImplTest {
     entityDto.setName("Test Entity");
 
     Entity entity = new Entity();
-    entity.setId(1L);
+    entity.setId(UUID.randomUUID());
     entity.setName("Test Entity");
     entity.setCreatedAt(LocalDateTime.now());
     entity.setLastUpdatedAt(LocalDateTime.now());
@@ -55,15 +56,16 @@ class EntityServiceImplTest {
   @Test
   void testUpdate() {
     // Arrange
+    UUID id = UUID.randomUUID();
     EntityDto entityDto = new EntityDto();
-    entityDto.setId(1L);
+    entityDto.setId(id);
     entityDto.setName("Updated Entity");
 
     Entity entity = new Entity();
-    entity.setId(1L);
+    entity.setId(id);
     entity.setName("Updated Entity");
 
-    when(repository.findById(1L)).thenReturn(Optional.of(entity));
+    when(repository.findById(UUID.randomUUID())).thenReturn(Optional.of(entity));
     when(repository.save(entity)).thenReturn(entity);
     when(mapper.toEntity(entityDto)).thenReturn(entity);
     when(mapper.toDto(entity)).thenReturn(entityDto);
@@ -74,14 +76,14 @@ class EntityServiceImplTest {
     // Assert
     assertTrue(result.isPresent());
     assertEquals("Updated Entity", result.get().getName());
-    verify(repository, times(1)).findById(1L);
+    verify(repository, times(1)).findById(UUID.randomUUID());
     verify(repository, times(1)).save(entity);
   }
 
   @Test
   void testDelete() {
     // Arrange
-    Long entityId = 1L;
+    UUID entityId = UUID.randomUUID();
     Entity entity = new Entity();
     entity.setId(entityId);
 
@@ -97,7 +99,7 @@ class EntityServiceImplTest {
   @Test
   void testDeleteThrowsNotFoundException() {
     // Arrange
-    Long entityId = 1L;
+    UUID entityId = UUID.randomUUID();
     when(repository.findById(entityId)).thenReturn(Optional.empty());
 
     // Act & Assert
@@ -111,21 +113,21 @@ class EntityServiceImplTest {
   void testGetAll() {
     // Arrange
     Entity entity1 = new Entity();
-    entity1.setId(1L);
+    entity1.setId(UUID.randomUUID());
     entity1.setName("Entity 1");
 
     Entity entity2 = new Entity();
-    entity2.setId(2L);
+    entity2.setId(UUID.randomUUID());
     entity2.setName("Entity 2");
 
     List<Entity> entities = List.of(entity1, entity2);
 
     EntityDto dto1 = new EntityDto();
-    dto1.setId(1L);
+    dto1.setId(UUID.randomUUID());
     dto1.setName("Entity 1");
 
     EntityDto dto2 = new EntityDto();
-    dto2.setId(2L);
+    dto2.setId(UUID.randomUUID());
     dto2.setName("Entity 2");
 
     when(repository.findAll()).thenReturn(entities);
@@ -145,7 +147,7 @@ class EntityServiceImplTest {
   @Test
   void testFindById() {
     // Arrange
-    Long entityId = 1L;
+    UUID entityId = UUID.randomUUID();
     Entity entity = new Entity();
     entity.setId(entityId);
     entity.setName("Test Entity");

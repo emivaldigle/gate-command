@@ -9,6 +9,7 @@ import com.visp.gate_command.domain.entity.Poc;
 import com.visp.gate_command.mapper.PocMapper;
 import com.visp.gate_command.repository.PocRepository;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,11 +39,12 @@ class PocServiceImplTest {
 
   @Test
   void testUpdate() {
+    UUID id = UUID.randomUUID();
     PocDto pocDto = new PocDto();
-    pocDto.setId(1L);
+    pocDto.setId(id);
     Poc poc = new Poc();
-    poc.setId(1L);
-    when(pocRepository.findById(1L)).thenReturn(Optional.of(poc));
+    poc.setId(id);
+    when(pocRepository.findById(id)).thenReturn(Optional.of(poc));
     when(pocRepository.save(poc)).thenReturn(poc);
     when(pocMapper.toEntity(pocDto)).thenReturn(poc);
     when(pocMapper.toDto(poc)).thenReturn(pocDto);
@@ -55,7 +57,7 @@ class PocServiceImplTest {
 
   @Test
   void testDelete() {
-    Long id = 1L;
+    UUID id = UUID.randomUUID();
     when(pocRepository.findById(id)).thenReturn(Optional.of(new Poc()));
     doNothing().when(pocRepository).deleteById(id);
     pocService.delete(id);

@@ -8,6 +8,7 @@ import com.visp.gate_command.domain.dto.ParkingDto;
 import com.visp.gate_command.domain.enums.UserType;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,28 +19,31 @@ public class AccessAuthorizationServiceImpl implements AccessAuthorizationServic
   private final ParkingService parkingService;
 
   @Override
-  public AccessAuthorizationResponse isVehicleAuthorized(String licensePlate) {
+  public AccessAuthorizationResponse isVehicleAuthorized(UUID entityId, String licensePlate) {
     return vehicleService
-        .findByLicensePlate(licensePlate)
+        .findByLicensePlateAndEntityId(licensePlate, entityId)
         .map(
             vehicle -> {
               Optional<ParkingDto> currentParking =
                   parkingService.findByCurrentLicensePlate(licensePlate);
+              final var parking = parkingService.getAllByUser(vehicle.getUser().getId());
               boolean isAuthorized =
-                  currentParking.isPresent()
-                      || parkingService.getAllByUser(vehicle.getUser().getId()).stream()
-                          .anyMatch(ParkingDto::getAvailable);
+                  currentParking.isPresent() || parking.stream().anyMatch(ParkingDto::getAvailable);
+              final var identifier =
+                  parking.stream().map(ParkingDto::getIdentifier).findFirst().orElse(null);
 
-              return buildResponse(isAuthorized, vehicle.getUser().getType());
+              return buildResponse(isAuthorized, vehicle.getUser().getType(), identifier);
             })
-        .orElse(buildResponse(false, null));
+        .orElse(buildResponse(false, UserType.EXTERNAL, null));
   }
 
-  private AccessAuthorizationResponse buildResponse(boolean isAuthorized, UserType userType) {
+  private AccessAuthorizationResponse buildResponse(
+      boolean isAuthorized, UserType userType, String parkingIdentifier) {
     return AccessAuthorizationResponse.builder()
         .isAuthorized(isAuthorized)
         .timestamp(LocalDateTime.now())
         .userType(userType)
+        .parkingIdentifier(parkingIdentifier)
         .build();
   }
 }

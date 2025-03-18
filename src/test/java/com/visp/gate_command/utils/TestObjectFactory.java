@@ -63,7 +63,7 @@ public class TestObjectFactory {
         .available(true)
         .expirationDate(null)
         .isForVisit(true)
-        .entityId(1L)
+        .entityId(userDto.getEntity().getId())
         .build();
   }
 

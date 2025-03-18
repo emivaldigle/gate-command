@@ -5,6 +5,7 @@ import com.visp.gate_command.domain.enums.EntityType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EntityDto {
 
-  private Long id;
+  private UUID id;
 
   @NotEmpty
   @Size(min = 2, max = 50)

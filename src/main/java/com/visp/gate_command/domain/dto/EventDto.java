@@ -17,7 +17,7 @@ public class EventDto {
 
   private UUID id;
 
-  private Long pocId;
+  private UUID pocId;
 
   private String plate;
 

@@ -2,6 +2,7 @@ package com.visp.gate_command.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,15 +13,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ParkingDto {
-  private Long id;
-
+  private UUID id;
   private UserDto user;
 
   private String identifier;
 
   private String currentLicensePlate;
 
-  private Long entityId;
+  private UUID entityId;
 
   private Boolean isForVisit;
 
@@ -31,4 +31,7 @@ public class ParkingDto {
 
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private LocalDateTime expirationDate;
+
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private LocalDateTime lastUpdatedAt;
 }

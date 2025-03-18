@@ -5,7 +5,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
     <changeSet id="6" author="your-name">
         <createTable tableName="pocs">
-            <column name="id" type="BIGSERIAL" autoIncrement="true">
+            <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="identifier" type="VARCHAR(255)">
@@ -17,7 +17,7 @@
             <column name="type" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="entity_id" type="BIGINT">
+            <column name="entity_id" type="UUID">
                 <constraints nullable="false" foreignKeyName="fk_pocs_entities" referencedTableName="entities" referencedColumnNames="id"/>
             </column>
             <column name="location" type="VARCHAR(255)">
@@ -33,6 +33,9 @@
                 <constraints nullable="true"/>
             </column>
             <column name="last_sync" type="TIMESTAMP">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_updated_at" type="TIMESTAMP">
                 <constraints nullable="true"/>
             </column>
         </createTable>

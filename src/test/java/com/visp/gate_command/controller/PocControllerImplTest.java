@@ -12,6 +12,7 @@ import com.visp.gate_command.domain.dto.PocDto;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,7 +44,7 @@ class PocControllerImplTest {
     PocDto pocDto = new PocDto();
     when(pocService.update(pocDto)).thenReturn(Optional.of(pocDto));
 
-    ResponseEntity<PocDto> response = pocController.update(pocDto, 1L);
+    ResponseEntity<PocDto> response = pocController.update(pocDto, UUID.randomUUID());
 
     assertEquals(200, response.getStatusCode().value());
     assertEquals(pocDto, response.getBody());
@@ -52,7 +53,7 @@ class PocControllerImplTest {
 
   @Test
   void testDelete() {
-    Long id = 1L;
+    UUID id = UUID.randomUUID();
     doNothing().when(pocService).delete(id);
 
     ResponseEntity<Void> response = pocController.delete(id);
@@ -63,7 +64,7 @@ class PocControllerImplTest {
 
   @Test
   void testRetrievePocByEntity() {
-    Long entityId = 1L;
+    UUID entityId = UUID.randomUUID();
     when(pocService.retrievePocByEntity(entityId)).thenReturn(Collections.emptyList());
 
     ResponseEntity<List<PocDto>> response = pocController.retrievePocByEntity(entityId);

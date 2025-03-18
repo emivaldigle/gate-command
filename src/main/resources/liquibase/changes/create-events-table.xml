@@ -17,7 +17,7 @@
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
-            <column name="poc_id" type="BIGINT">
+            <column name="poc_id" type="UUID">
                 <constraints nullable="true" foreignKeyName="fk_events_pocs" referencedTableName="pocs" referencedColumnNames="id"/>
             </column>
         </createTable>

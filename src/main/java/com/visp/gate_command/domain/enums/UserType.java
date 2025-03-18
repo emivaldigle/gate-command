@@ -5,5 +5,6 @@ public enum UserType {
   ADMINISTRATOR,
   RESIDENT,
   CONCIERGE,
-  VISIT
+  VISIT,
+  EXTERNAL
 }
