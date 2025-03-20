@@ -43,7 +43,6 @@
         <createIndex indexName="idx_parking_identifier" tableName="parking" unique="true">
             <column name="identifier"/>
         </createIndex>
-        <addUniqueConstraint tableName="parking" columnNames="entity_id, identifier" constraintName="unique_entity_identifier"/>
 
     </changeSet>
 </databaseChangeLog>

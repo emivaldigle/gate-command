@@ -64,6 +64,24 @@ public interface ParkingController {
   ResponseEntity<List<ParkingDto>> getAllByEntity(@PathVariable UUID entityId);
 
   @Operation(
+      summary = "Get all parkings by entity",
+      description =
+          "Retrieves all parkings associated with a specific entity and date greater than provided",
+      responses = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "parkings retrieved successfully",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ParkingDto.class, type = "array"))),
+        @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
+      })
+  @GetMapping("/find-by-entity/{entityId}/date")
+  ResponseEntity<List<ParkingDto>> findByEntityAndGreaterThanDate(
+      @PathVariable UUID entityId, @RequestParam String date);
+
+  @Operation(
       summary = "Get all parkings by user",
       description = "Retrieves all parkings associated with a specific user",
       responses = {

@@ -18,5 +18,9 @@ public interface ParkingService {
 
   Optional<ParkingDto> findByCurrentLicensePlate(String currentLicensePlate);
 
+  List<ParkingDto> findAllWithCreatedAtAndUpdatedAtGreaterThan(UUID entityId, String date);
+
+  Optional<ParkingDto> findByEntityIdAndIdentifier(UUID entityId, String identifier);
+
   void seed(UUID entityId);
 }

@@ -37,6 +37,13 @@ public class ParkingControllerImpl implements ParkingController {
   }
 
   @Override
+  public ResponseEntity<List<ParkingDto>> findByEntityAndGreaterThanDate(
+      UUID entityId, String date) {
+    return ResponseEntity.ok(
+        parkingService.findAllWithCreatedAtAndUpdatedAtGreaterThan(entityId, date));
+  }
+
+  @Override
   public ResponseEntity<List<ParkingDto>> getAllByUser(UUID userId) {
     return ResponseEntity.ok(parkingService.getAllByUser(userId));
   }

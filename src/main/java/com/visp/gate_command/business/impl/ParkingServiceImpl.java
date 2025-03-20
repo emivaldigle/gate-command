@@ -1,21 +1,29 @@
 package com.visp.gate_command.business.impl;
 
+import static com.visp.gate_command.util.DateUtils.parseDate;
+
 import com.visp.gate_command.aop.Loggable;
 import com.visp.gate_command.business.EntityService;
 import com.visp.gate_command.business.ParkingService;
 import com.visp.gate_command.domain.dto.ParkingDto;
 import com.visp.gate_command.domain.entity.Parking;
 import com.visp.gate_command.exception.NotFoundException;
+import com.visp.gate_command.exception.ParkingUpdateException;
 import com.visp.gate_command.mapper.ParkingMapper;
 import com.visp.gate_command.messaging.MqttPublishService;
 import com.visp.gate_command.repository.ParkingRepository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+
+import static com.visp.gate_command.util.DateUtils.parseDate;
+import static java.util.function.Predicate.not;
 
 @Service
 @RequiredArgsConstructor
@@ -48,9 +56,15 @@ public class ParkingServiceImpl implements ParkingService {
       throw new NotFoundException(
           String.format("parking with id %s not found", parkingDto.getId()));
     }
-    parkingDto.setLastUpdatedAt(LocalDateTime.now());
+    if (!parkingDto.getIdentifier().equals(optionalParking.get().getIdentifier())) {
+      throw new ParkingUpdateException("unable to update provided parking, the identifier does not match with one stored in data base");
+    }
+    if (Objects.isNull(parkingDto.getLastUpdatedAt())) {
+      parkingDto.setLastUpdatedAt(LocalDateTime.now());
+    }
+    final var parkingEntity = parkingMapper.toEntity(parkingDto);
     final var updatedParking =
-        parkingMapper.toDto(parkingRepository.save(parkingMapper.toEntity(parkingDto)));
+        parkingMapper.toDto(parkingRepository.save(parkingEntity));
     mqttPublishService.publishMessage(
         String.format(TOPIC_PARKING_UPDATE, updatedParking.getEntityId()), updatedParking);
 
@@ -85,6 +99,22 @@ public class ParkingServiceImpl implements ParkingService {
   public Optional<ParkingDto> findByCurrentLicensePlate(String currentLicensePlate) {
     final var optionalParking = parkingRepository.findByCurrentLicensePlate(currentLicensePlate);
     return optionalParking.map(parkingMapper::toDto);
+  }
+
+  @Override
+  public List<ParkingDto> findAllWithCreatedAtAndUpdatedAtGreaterThan(UUID entityId, String date) {
+    LocalDateTime parsedDate = parseDate(date);
+    return parkingRepository
+        .findAllByEntityIdAndCreatedAtGreaterThanOrLastUpdatedAtGreaterThan(
+            entityId, parsedDate, parsedDate)
+        .stream()
+        .map(parkingMapper::toDto)
+        .toList();
+  }
+
+  @Override
+  public Optional<ParkingDto> findByEntityIdAndIdentifier(UUID entityId, String identifier) {
+    return parkingRepository.findByEntityIdAndIdentifier(entityId, identifier).map(parkingMapper::toDto);
   }
 
   @Override

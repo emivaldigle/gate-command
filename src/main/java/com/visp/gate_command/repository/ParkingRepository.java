@@ -22,4 +22,29 @@ public interface ParkingRepository extends JpaRepository<Parking, UUID> {
 
   Optional<Parking> findByEntityIdAndIdentifier(UUID entityId, String identifier);
 
+  List<Parking> findAllByEntityIdAndCreatedAtGreaterThanOrLastUpdatedAtGreaterThan(
+      UUID entityId, LocalDateTime dateTime1, LocalDateTime dateTime2);
+
+  @Modifying
+  @Query(
+      value =
+          "UPDATE parking SET "
+              + "identifier = :identifier, "
+              + "user_id = :userId, "
+              + "current_license_plate = :currentLicensePlate, "
+              + "is_for_visit = :isForVisit, "
+              + "available = :available, "
+              + "expiration_date = :expirationDate, "
+              + "last_updated_at = :lastUpdatedAt "
+              + "WHERE id = :id",
+      nativeQuery = true)
+  int updateParking(
+      @Param("identifier") String identifier,
+      @Param("userId") UUID userId,
+      @Param("currentLicensePlate") String currentLicensePlate,
+      @Param("isForVisit") Boolean isForVisit,
+      @Param("available") Boolean available,
+      @Param("expirationDate") LocalDateTime expirationDate,
+      @Param("lastUpdatedAt") LocalDateTime lastUpdatedAt,
+      @Param("id") UUID id);
 }

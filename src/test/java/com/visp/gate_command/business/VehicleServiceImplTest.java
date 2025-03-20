@@ -125,7 +125,8 @@ class VehicleServiceImplTest {
 
     // Act & Assert
     NotFoundException exception =
-        assertThrows(NotFoundException.class, () -> vehicleService.delete(vehicleId, UUID.randomUUID()));
+        assertThrows(
+            NotFoundException.class, () -> vehicleService.delete(vehicleId, UUID.randomUUID()));
     assertEquals("not found vehicle 1", exception.getMessage());
     verify(vehicleRepository, times(1)).findById(vehicleId);
   }
