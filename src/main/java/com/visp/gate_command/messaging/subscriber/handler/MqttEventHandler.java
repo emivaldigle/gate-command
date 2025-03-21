@@ -1,4 +1,4 @@
-package com.visp.gate_command.handler;
+package com.visp.gate_command.messaging.subscriber.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.visp.gate_command.domain.dto.EventDto;
@@ -6,8 +6,8 @@ import com.visp.gate_command.domain.entity.Event;
 import com.visp.gate_command.mapper.EventMapper;
 import com.visp.gate_command.messaging.MqttSubscriberService;
 import com.visp.gate_command.repository.EventRepository;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,15 +20,16 @@ public class MqttEventHandler implements MqttSubscriberService {
   private final EventRepository eventRepository;
   private final ObjectMapper objectMapper;
   private final EventMapper eventMapper;
+  private final MqttClient client;
 
   @Override
   public void messageArrived(String topic, MqttMessage message) {
-    log.info("Message arrived on topic {} with message: \n {}", topic, message);
     try {
       EventDto eventDto = objectMapper.readValue(message.getPayload(), EventDto.class);
       Event event = eventMapper.toEntity(eventDto);
-      event.setCreatedAt(LocalDateTime.now());
+      // event.setCreatedAt(LocalDateTime.now());
       eventRepository.save(event);
+      client.messageArrivedComplete(message.getId(), message.getQos());
     } catch (Exception ex) {
       log.info("problems unpacking message: {} on topic {}", topic, message);
     }

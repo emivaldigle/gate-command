@@ -19,11 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-
-import static com.visp.gate_command.util.DateUtils.parseDate;
-import static java.util.function.Predicate.not;
 
 @Service
 @RequiredArgsConstructor
@@ -57,14 +53,14 @@ public class ParkingServiceImpl implements ParkingService {
           String.format("parking with id %s not found", parkingDto.getId()));
     }
     if (!parkingDto.getIdentifier().equals(optionalParking.get().getIdentifier())) {
-      throw new ParkingUpdateException("unable to update provided parking, the identifier does not match with one stored in data base");
+      throw new ParkingUpdateException(
+          "unable to update provided parking, the identifier does not match with one stored in data base");
     }
     if (Objects.isNull(parkingDto.getLastUpdatedAt())) {
       parkingDto.setLastUpdatedAt(LocalDateTime.now());
     }
     final var parkingEntity = parkingMapper.toEntity(parkingDto);
-    final var updatedParking =
-        parkingMapper.toDto(parkingRepository.save(parkingEntity));
+    final var updatedParking = parkingMapper.toDto(parkingRepository.save(parkingEntity));
     mqttPublishService.publishMessage(
         String.format(TOPIC_PARKING_UPDATE, updatedParking.getEntityId()), updatedParking);
 
@@ -114,7 +110,9 @@ public class ParkingServiceImpl implements ParkingService {
 
   @Override
   public Optional<ParkingDto> findByEntityIdAndIdentifier(UUID entityId, String identifier) {
-    return parkingRepository.findByEntityIdAndIdentifier(entityId, identifier).map(parkingMapper::toDto);
+    return parkingRepository
+        .findByEntityIdAndIdentifier(entityId, identifier)
+        .map(parkingMapper::toDto);
   }
 
   @Override

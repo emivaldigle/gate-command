@@ -4,7 +4,6 @@ import com.visp.gate_command.aop.Loggable;
 import com.visp.gate_command.business.EventService;
 import com.visp.gate_command.domain.dto.EventDto;
 import com.visp.gate_command.mapper.EventMapper;
-import com.visp.gate_command.messaging.MqttPublishService;
 import com.visp.gate_command.repository.EventRepository;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,10 +16,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Loggable
 public class EventServiceImpl implements EventService {
-
   private final EventRepository eventRepository;
   private final EventMapper eventMapper;
-  private final MqttPublishService mqttPublishService;
 
   @Override
   public EventDto create(EventDto eventDto) {

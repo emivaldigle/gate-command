@@ -1,7 +1,7 @@
 package com.visp.gate_command.messaging.subscriber;
 
 import com.visp.gate_command.domain.entity.Entity;
-import com.visp.gate_command.handler.MqttCallbackHandler;
+import com.visp.gate_command.messaging.subscriber.handler.MqttCallbackHandler;
 import com.visp.gate_command.repository.EntityRepository;
 import java.util.HashSet;
 import java.util.List;
@@ -26,10 +26,10 @@ public class MqttDynamicSubscriptionService {
 
   private static final String TOPIC_LOCAL_EVENTS = "local-events/%s/create";
   private static final String TOPIC_LOCAL_PARKING = "local-parking/%s/update";
-
+  private static final String TOPIC_PENDING_EVENTS = "pending-events/%s/sync";
   private final Set<String> subscribedTopics = new HashSet<>();
 
-  @Scheduled(fixedRate = 60000) // Verifica cada minuto
+  @Scheduled(fixedRate = 60000)
   public void updateSubscriptions() {
     try {
       mqttClient.setCallback(mqttCallbackHandler);
@@ -44,7 +44,8 @@ public class MqttDynamicSubscriptionService {
                   id ->
                       Set.of(
                           String.format(TOPIC_LOCAL_EVENTS, id),
-                          String.format(TOPIC_LOCAL_PARKING, id))
+                          String.format(TOPIC_LOCAL_PARKING, id),
+                          String.format(TOPIC_PENDING_EVENTS, id))
                           .stream())
               .collect(Collectors.toSet());
 

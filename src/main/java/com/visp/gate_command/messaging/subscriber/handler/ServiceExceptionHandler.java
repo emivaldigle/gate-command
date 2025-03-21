@@ -1,4 +1,4 @@
-package com.visp.gate_command.handler;
+package com.visp.gate_command.messaging.subscriber.handler;
 
 import com.visp.gate_command.domain.dto.ResponseDto;
 import com.visp.gate_command.exception.FileProcessingException;

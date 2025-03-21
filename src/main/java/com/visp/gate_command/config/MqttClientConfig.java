@@ -16,6 +16,7 @@ public class MqttClientConfig {
     MqttClient client = new MqttClient(MQTT_BROKER, MqttClient.generateClientId());
     MqttConnectOptions options = new MqttConnectOptions();
     options.setCleanSession(false);
+    options.setAutomaticReconnect(true);
     client.connect(options);
     return client;
   }

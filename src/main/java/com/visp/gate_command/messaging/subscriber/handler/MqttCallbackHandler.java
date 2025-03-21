@@ -1,4 +1,4 @@
-package com.visp.gate_command.handler;
+package com.visp.gate_command.messaging.subscriber.handler;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
