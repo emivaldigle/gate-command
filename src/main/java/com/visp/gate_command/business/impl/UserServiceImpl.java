@@ -13,6 +13,7 @@ import com.visp.gate_command.exception.FileProcessingException;
 import com.visp.gate_command.exception.NotFoundException;
 import com.visp.gate_command.exception.UserAlreadyExistException;
 import com.visp.gate_command.mapper.UserMapper;
+import com.visp.gate_command.messaging.MqttPublishService;
 import com.visp.gate_command.repository.UserRepository;
 import com.visp.gate_command.util.Encryptor;
 import com.visp.gate_command.util.FileProcessor;
@@ -22,19 +23,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
-@Loggable
+@Loggable(level = "DEBUG")
 public class UserServiceImpl implements UserService {
   private final UserRepository repository;
   private final EntityService entityService;
   private final UserMapper userMapper;
   private final List<UserType> ALLOWED_USER_TYPES =
       List.of(UserType.ADMINISTRATOR, UserType.RESIDENT, UserType.CONCIERGE, UserType.VISIT);
+  private final MqttPublishService mqttPublishService;
+  private static final String TOPIC_USER_CREATE = "user/%s/create";
+  private static final String TOPIC_USER_UPDATE = "user/%s/update";
+  private static final String TOPIC_USER_BATCH_CREATE = "user/%s/batch-create";
+  private static final String TOPIC_USER_BATCH_DELETE = "user/%s/batch-delete";
 
   @Override
   public UserDto create(UserDto userDto) {
@@ -42,21 +49,40 @@ public class UserServiceImpl implements UserService {
     if (userByEmail.isPresent()) {
       throw new UserAlreadyExistException("User email already exists");
     }
+    userDto.setId(UUID.randomUUID());
     userDto.setCreatedAt(LocalDateTime.now());
-    return Optional.of(userDto)
-        .filter(dto -> ALLOWED_USER_TYPES.contains(dto.getType()))
-        .map(dto -> repository.save(userMapper.toEntity(dto)))
-        .map(userMapper::toDto)
-        .orElseThrow(
-            () ->
-                new UnsupportedOperationException(
-                    String.format(
-                        "Unable to create user with given profile %s", userDto.getType())));
+    userDto.setLastUpdatedAt(LocalDateTime.now());
+    final var optionalUserDto =
+        Optional.of(userDto)
+            .filter(dto -> ALLOWED_USER_TYPES.contains(dto.getType()))
+            .map(dto -> repository.save(userMapper.toEntity(dto)))
+            .map(userMapper::toDto)
+            .orElseThrow(
+                () ->
+                    new UnsupportedOperationException(
+                        String.format(
+                            "Unable to create user with given profile %s", userDto.getType())));
+    mqttPublishService.publishMessage(
+        String.format(TOPIC_USER_CREATE, userDto.getEntity().getId()), optionalUserDto);
+    return optionalUserDto;
+  }
+
+  @Override
+  public UserDto update(UserDto userDto, UUID userId) {
+    Optional<User> optionalUser = repository.findById(userId);
+    if (optionalUser.isEmpty()) {
+      throw new NotFoundException("user not found");
+    }
+    userDto.setLastUpdatedAt(LocalDateTime.now());
+    final var updatedUser = userMapper.toDto(repository.save(userMapper.toEntity(userDto)));
+    mqttPublishService.publishMessage(
+        String.format(TOPIC_USER_UPDATE, updatedUser.getEntity().getId()), updatedUser);
+    return updatedUser;
   }
 
   @Override
   @Transactional
-  public void loadUsersWithFile(MultipartFile file, Long entityId) {
+  public void loadUsersWithFile(MultipartFile file, UUID entityId) {
     Optional<EntityDto> optionalEntityDto = entityService.findById(entityId);
     if (optionalEntityDto.isEmpty()) {
       throw new NotFoundException(String.format("Entity not found %s", entityId));
@@ -76,6 +102,7 @@ public class UserServiceImpl implements UserService {
       for (String[] row : rows) {
         UserDto userDto =
             UserDto.builder()
+                .id(UUID.randomUUID())
                 .document(row[0])
                 .name(row[1])
                 .lastName(row[2])
@@ -87,6 +114,7 @@ public class UserServiceImpl implements UserService {
                 .type(UserType.RESIDENT)
                 .entity(optionalEntityDto.get())
                 .createdAt(LocalDateTime.now())
+                .lastUpdatedAt(LocalDateTime.now())
                 .build();
         repository.save(userMapper.toEntity(userDto));
       }
@@ -100,7 +128,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public void deactivateUsersWithFile(MultipartFile file, Long entityId) {
+  public void deactivateUsersWithFile(MultipartFile file, UUID entityId) {
     try {
       InputStream inputStream = file.getInputStream();
       List<String[]> rows;
@@ -128,5 +156,10 @@ public class UserServiceImpl implements UserService {
               "Massive deactivation, unable to process file %s for entity id %s",
               file.getName(), entityId));
     }
+  }
+
+  @Override
+  public Optional<UserDto> findByUserId(UUID userId) {
+    return repository.findById(userId).map(userMapper::toDto);
   }
 }

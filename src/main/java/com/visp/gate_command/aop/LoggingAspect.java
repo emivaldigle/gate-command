@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,38 +15,68 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoggingAspect {
 
-  private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+  private static final Logger log = LoggerFactory.getLogger(LoggingAspect.class);
   private final ObjectMapper objectMapper;
 
   @Around(
       "@annotation(com.visp.gate_command.aop.Loggable) || @within(com.visp.gate_command.aop.Loggable)")
   public Object logMethodExecution(ProceedingJoinPoint joinPoint) throws Throwable {
-    String methodName = joinPoint.getSignature().getName();
+    MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+    Loggable loggable = signature.getMethod().getAnnotation(Loggable.class);
+
+    if (loggable == null) {
+      loggable = joinPoint.getTarget().getClass().getAnnotation(Loggable.class);
+    }
+
+    String methodName = signature.getName();
     String className = joinPoint.getTarget().getClass().getSimpleName();
     Object[] args = joinPoint.getArgs();
+    String logLevel = loggable != null ? loggable.level().toUpperCase() : "INFO";
 
-    try {
-      String argsJson = objectMapper.writeValueAsString(args);
-      logger.info("Entering {}.{} with arguments: {}", className, methodName, argsJson);
-    } catch (Exception e) {
-      logger.warn("Failed to log arguments for {}.{}", className, methodName);
-    }
+    String argsJson = safeToJson(args);
+
+    logMessage(logLevel, "Entering {}.{} with arguments: {}", className, methodName, argsJson);
 
     Object result;
     try {
       result = joinPoint.proceed();
     } catch (Exception e) {
-      logger.error("Exception in {}.{}: {}", className, methodName, e.getMessage());
+      logMessage("ERROR", "Exception in {}.{}: {}", className, methodName, e.getMessage());
       throw e;
     }
 
-    try {
-      String resultJson = objectMapper.writeValueAsString(result);
-      logger.info("Exiting {}.{} with result: {}", className, methodName, resultJson);
-    } catch (Exception e) {
-      logger.warn("Failed to log result for {}.{}", className, methodName);
-    }
+    String resultJson = safeToJson(result);
+
+    logMessage(logLevel, "Exiting {}.{} with result: {}", className, methodName, resultJson);
 
     return result;
+  }
+
+  private String safeToJson(Object obj) {
+    try {
+      return objectMapper.writeValueAsString(obj);
+    } catch (Exception e) {
+      return "[unserializable]";
+    }
+  }
+
+  private void logMessage(String level, String message, Object... args) {
+    switch (level) {
+      case "DEBUG":
+        log.debug(message, args);
+        break;
+      case "INFO":
+        log.info(message, args);
+        break;
+      case "WARN":
+        log.warn(message, args);
+        break;
+      case "ERROR":
+        log.error(message, args);
+        break;
+      default:
+        log.info(message, args);
+        break;
+    }
   }
 }

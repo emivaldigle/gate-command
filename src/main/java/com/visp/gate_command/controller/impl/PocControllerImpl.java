@@ -5,6 +5,7 @@ import com.visp.gate_command.business.PocService;
 import com.visp.gate_command.controller.PocController;
 import com.visp.gate_command.domain.dto.PocDto;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class PocControllerImpl implements PocController {
   }
 
   @Override
-  public ResponseEntity<PocDto> update(PocDto pocDto, Long id) {
+  public ResponseEntity<PocDto> update(PocDto pocDto, UUID id) {
     return pocService
         .update(pocDto)
         .map(ResponseEntity::ok)
@@ -30,13 +31,13 @@ public class PocControllerImpl implements PocController {
   }
 
   @Override
-  public ResponseEntity<Void> delete(Long id) {
+  public ResponseEntity<Void> delete(UUID id) {
     pocService.delete(id);
     return ResponseEntity.noContent().build();
   }
 
   @Override
-  public ResponseEntity<List<PocDto>> retrievePocByEntity(Long entityId) {
+  public ResponseEntity<List<PocDto>> retrievePocByEntity(UUID entityId) {
     return ResponseEntity.ok(pocService.retrievePocByEntity(entityId));
   }
 }

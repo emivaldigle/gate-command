@@ -1,6 +1,5 @@
 package com.visp.gate_command.controller;
 
-import com.visp.gate_command.domain.dto.EntityDto;
 import com.visp.gate_command.domain.dto.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,8 +7,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.UUID;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,7 +52,7 @@ public interface UserController {
       })
   @PostMapping(value = "/batch-save/{entityId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   ResponseEntity<Void> batchSave(
-      @RequestParam("file") MultipartFile file, @PathVariable Long entityId);
+      @RequestParam("file") MultipartFile file, @PathVariable UUID entityId);
 
   @Operation(
       summary = "Remove given users from system",
@@ -60,13 +61,23 @@ public interface UserController {
         @ApiResponse(
             responseCode = "202",
             description = "File posted successfully",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = EntityDto.class))),
+            content = @Content(mediaType = "application/json")),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content)
       })
   @PostMapping(value = "/batch-delete/{entityId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   ResponseEntity<Void> batchDelete(
-      @RequestParam("file") MultipartFile file, @PathVariable Long entityId);
+      @RequestParam("file") MultipartFile file, @PathVariable UUID entityId);
+
+  @Operation(
+      summary = "Update an existing user",
+      description = "Updates an existing user with partial or full data",
+      responses = {
+        @ApiResponse(
+            responseCode = "202",
+            description = "User updated successfully",
+            content = @Content),
+        @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+      })
+  @PatchMapping("/{id}")
+  ResponseEntity<UserDto> update(@RequestBody UserDto userDto, @PathVariable UUID id);
 }

@@ -3,14 +3,13 @@ package com.visp.gate_command.domain.entity;
 import com.visp.gate_command.domain.enums.UserType;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.Data;
 
 @Data
@@ -19,9 +18,7 @@ import lombok.Data;
     name = "users",
     uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @Id private UUID id;
 
   @Column(nullable = false)
   private String document;
@@ -58,4 +55,7 @@ public class User {
 
   @Column(nullable = false)
   private LocalDateTime createdAt;
+
+  @Column(nullable = false)
+  private LocalDateTime lastUpdatedAt;
 }

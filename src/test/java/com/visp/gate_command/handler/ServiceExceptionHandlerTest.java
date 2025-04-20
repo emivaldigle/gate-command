@@ -8,6 +8,7 @@ import com.visp.gate_command.domain.dto.ResponseDto;
 import com.visp.gate_command.exception.FileProcessingException;
 import com.visp.gate_command.exception.NotFoundException;
 import com.visp.gate_command.exception.UserAlreadyExistException;
+import com.visp.gate_command.messaging.subscriber.handler.ServiceExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

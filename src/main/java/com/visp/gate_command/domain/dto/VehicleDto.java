@@ -3,6 +3,7 @@ package com.visp.gate_command.domain.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.visp.gate_command.domain.enums.VehicleType;
 import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class VehicleDto {
 
-  private Long id;
-
+  private UUID id;
   private UserDto user;
 
   private String plate;
@@ -24,4 +24,7 @@ public class VehicleDto {
   private LocalDateTime createdAt;
 
   private VehicleType vehicleType;
+
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private LocalDateTime lastUpdatedAt;
 }

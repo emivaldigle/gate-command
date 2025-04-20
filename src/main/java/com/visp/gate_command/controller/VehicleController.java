@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +46,7 @@ public interface VehicleController {
         @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
       })
   @PatchMapping("/{id}")
-  ResponseEntity<VehicleDto> update(@PathVariable Long id, @RequestBody VehicleDto vehicleDto);
+  ResponseEntity<VehicleDto> update(@PathVariable UUID id, @RequestBody VehicleDto vehicleDto);
 
   @Operation(
       summary = "Delete a vehicle",
@@ -54,8 +55,8 @@ public interface VehicleController {
         @ApiResponse(responseCode = "204", description = "Vehicle deleted successfully"),
         @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
       })
-  @DeleteMapping("/{id}")
-  ResponseEntity<Void> delete(@PathVariable Long id);
+  @DeleteMapping("/userId")
+  ResponseEntity<Void> delete(@PathVariable UUID userId, @RequestParam UUID entityId);
 
   @Operation(
       summary = "Get all vehicles by user",
@@ -71,7 +72,7 @@ public interface VehicleController {
         @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
       })
   @GetMapping("/find-by-user/{userId}")
-  ResponseEntity<List<VehicleDto>> getByUserId(@PathVariable Long userId);
+  ResponseEntity<List<VehicleDto>> getByUserId(@PathVariable UUID userId);
 
   @Operation(
       summary = "Get all vehicles by entity",
@@ -87,7 +88,7 @@ public interface VehicleController {
         @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
       })
   @GetMapping("/find-by-entity/{entityId}")
-  ResponseEntity<List<VehicleDto>> getAllByEntity(@PathVariable Long entityId);
+  ResponseEntity<List<VehicleDto>> getAllByEntity(@PathVariable UUID entityId);
 
   @Operation(
       summary = "Get all vehicle summaries by entity",
@@ -104,7 +105,7 @@ public interface VehicleController {
         @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
       })
   @GetMapping("/{entityId}/summaries")
-  ResponseEntity<List<VehicleSummaryDto>> getAllSummariesByEntity(@PathVariable Long entityId);
+  ResponseEntity<List<VehicleSummaryDto>> getAllSummariesByEntity(@PathVariable UUID entityId);
 
   @Operation(
       summary = "Get all vehicle summaries by entity",
@@ -120,6 +121,7 @@ public interface VehicleController {
                     schema = @Schema(implementation = VehicleSummaryDto.class, type = "array"))),
         @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
       })
-  @GetMapping("/find-by-plate")
-  ResponseEntity<VehicleDto> findByPlateAndEntityId(@RequestParam String licensePlate);
+  @GetMapping("/find-by-plate/{entityId}")
+  ResponseEntity<VehicleDto> findByPlateAndEntityId(
+      @RequestParam String licensePlate, @PathVariable UUID entityId);
 }

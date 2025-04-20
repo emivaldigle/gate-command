@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public interface AccessAuthorizationController {
                     schema = @Schema(implementation = VehicleDto.class))),
         @ApiResponse(responseCode = "400", description = "Invalid input data", content = @Content),
       })
-  @GetMapping("/{id}")
-  ResponseEntity<AccessAuthorizationResponse> isVehicleAuthorized(@PathVariable Long id);
+  @GetMapping("/entity/{entityId}/plate/{licensePlate}")
+  ResponseEntity<AccessAuthorizationResponse> isVehicleAuthorized(
+      @PathVariable UUID id, @PathVariable String licensePlate);
 }

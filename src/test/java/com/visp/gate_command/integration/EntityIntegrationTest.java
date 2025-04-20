@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.visp.gate_command.domain.dto.EntityDto;
 import java.util.Objects;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -74,7 +75,7 @@ class EntityIntegrationTest {
 
     assertEquals(HttpStatus.OK, createResponse.getStatusCode());
 
-    Long entityId = Objects.requireNonNull(createResponse.getBody()).getId();
+    UUID entityId = Objects.requireNonNull(createResponse.getBody()).getId();
 
     // Act: Delete the entity
     getAuthenticatedRestTemplate().delete("/entities/" + entityId);

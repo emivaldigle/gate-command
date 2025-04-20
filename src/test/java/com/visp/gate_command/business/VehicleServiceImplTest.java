@@ -13,6 +13,7 @@ import com.visp.gate_command.repository.VehicleRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,7 +36,7 @@ class VehicleServiceImplTest {
     inputDto.setPlate("ABC123");
 
     Vehicle entity = new Vehicle();
-    entity.setId(1L);
+    entity.setId(UUID.randomUUID());
     entity.setPlate("ABC123");
     entity.setCreatedAt(LocalDateTime.now());
 
@@ -56,7 +57,7 @@ class VehicleServiceImplTest {
   @Test
   void testUpdateVehicle_Success() {
     // Arrange
-    Long vehicleId = 1L;
+    UUID vehicleId = UUID.randomUUID();
     VehicleDto inputDto = new VehicleDto();
     inputDto.setId(vehicleId);
     inputDto.setPlate("XYZ789");
@@ -85,7 +86,7 @@ class VehicleServiceImplTest {
   @Test
   void testUpdateVehicle_NotFound() {
     // Arrange
-    Long vehicleId = 1L;
+    UUID vehicleId = UUID.randomUUID();
     VehicleDto inputDto = new VehicleDto();
     inputDto.setId(vehicleId);
 
@@ -101,14 +102,14 @@ class VehicleServiceImplTest {
   @Test
   void testDeleteVehicle_Success() {
     // Arrange
-    Long vehicleId = 1L;
+    UUID vehicleId = UUID.randomUUID();
     Vehicle vehicle = new Vehicle();
     vehicle.setId(vehicleId);
 
     when(vehicleRepository.findById(vehicleId)).thenReturn(Optional.of(vehicle));
 
     // Act
-    vehicleService.delete(vehicleId);
+    vehicleService.delete(vehicleId, UUID.randomUUID());
 
     // Assert
     verify(vehicleRepository, times(1)).findById(vehicleId);
@@ -118,13 +119,14 @@ class VehicleServiceImplTest {
   @Test
   void testDeleteVehicle_NotFound() {
     // Arrange
-    Long vehicleId = 1L;
+    UUID vehicleId = UUID.randomUUID();
 
     when(vehicleRepository.findById(vehicleId)).thenReturn(Optional.empty());
 
     // Act & Assert
     NotFoundException exception =
-        assertThrows(NotFoundException.class, () -> vehicleService.delete(vehicleId));
+        assertThrows(
+            NotFoundException.class, () -> vehicleService.delete(vehicleId, UUID.randomUUID()));
     assertEquals("not found vehicle 1", exception.getMessage());
     verify(vehicleRepository, times(1)).findById(vehicleId);
   }
@@ -132,13 +134,14 @@ class VehicleServiceImplTest {
   @Test
   void testGetByUserId() {
     // Arrange
-    Long userId = 1L;
+    UUID userId = UUID.randomUUID();
+    UUID id = UUID.randomUUID();
     Vehicle vehicle = new Vehicle();
-    vehicle.setId(1L);
+    vehicle.setId(id);
     vehicle.setPlate("ABC123");
 
     VehicleDto vehicleDto = new VehicleDto();
-    vehicleDto.setId(1L);
+    vehicleDto.setId(id);
     vehicleDto.setPlate("ABC123");
 
     when(vehicleRepository.findByUserId(userId)).thenReturn(List.of(vehicle));
@@ -157,13 +160,14 @@ class VehicleServiceImplTest {
   @Test
   void testGetAllByEntity() {
     // Arrange
-    Long entityId = 1L;
+    UUID id = UUID.randomUUID();
+    UUID entityId = UUID.randomUUID();
     Vehicle vehicle = new Vehicle();
-    vehicle.setId(1L);
+    vehicle.setId(id);
     vehicle.setPlate("ABC123");
 
     VehicleDto vehicleDto = new VehicleDto();
-    vehicleDto.setId(1L);
+    vehicleDto.setId(id);
     vehicleDto.setPlate("ABC123");
 
     when(vehicleRepository.findByUserEntityId(entityId)).thenReturn(List.of(vehicle));
@@ -182,12 +186,13 @@ class VehicleServiceImplTest {
   @Test
   void testGetAllSummariesByEntity() {
     // Arrange
-    Long entityId = 1L;
+    UUID id = UUID.randomUUID();
+    UUID entityId = UUID.randomUUID();
     Vehicle vehicle = new Vehicle();
-    vehicle.setId(1L);
+    vehicle.setId(id);
     vehicle.setPlate("ABC123");
 
-    VehicleSummaryDto summaryDto = new VehicleSummaryDto(1L, "ABC123", false);
+    VehicleSummaryDto summaryDto = new VehicleSummaryDto(id, "ABC123", false);
 
     when(vehicleRepository.findByUserEntityId(entityId)).thenReturn(List.of(vehicle));
     when(vehicleMapper.toVehicleSummaryDto(vehicle)).thenReturn(summaryDto);

@@ -1,5 +1,6 @@
 package com.visp.gate_command.domain.dto;
 
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VehicleSummaryDto {
-  private Long userId;
+  private UUID userId;
   private String plate;
   private boolean isVisit;
 }

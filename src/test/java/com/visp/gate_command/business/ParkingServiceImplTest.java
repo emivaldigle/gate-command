@@ -14,9 +14,11 @@ import com.visp.gate_command.domain.dto.ParkingDto;
 import com.visp.gate_command.domain.entity.Parking;
 import com.visp.gate_command.exception.NotFoundException;
 import com.visp.gate_command.mapper.ParkingMapper;
+import com.visp.gate_command.messaging.MqttPublishService;
 import com.visp.gate_command.repository.ParkingRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,6 +31,8 @@ class ParkingServiceImplTest {
   @Mock private ParkingRepository parkingRepository;
 
   @Mock private ParkingMapper parkingMapper;
+
+  @Mock private MqttPublishService mqttPublishService;
 
   @InjectMocks private ParkingServiceImpl parkingService;
 
@@ -66,7 +70,7 @@ class ParkingServiceImplTest {
 
   @Test
   void testFindByUser() {
-    Long userId = 1L;
+    UUID userId = UUID.randomUUID();
     when(parkingRepository.findAllByUserId(userId)).thenReturn(List.of(new Parking()));
     when(parkingMapper.toDto(any())).thenReturn(new ParkingDto());
     List<ParkingDto> parkingByUser = parkingService.getAllByUser(userId);
@@ -76,7 +80,7 @@ class ParkingServiceImplTest {
 
   @Test
   void testFindByEntityUser() {
-    Long entityId = 1L;
+    UUID entityId = UUID.randomUUID();
     when(parkingRepository.findAllByEntityId(entityId)).thenReturn(List.of(new Parking()));
     when(parkingMapper.toDto(any())).thenReturn(new ParkingDto());
     List<ParkingDto> parkingByEntity = parkingService.getAllByEntity(entityId);

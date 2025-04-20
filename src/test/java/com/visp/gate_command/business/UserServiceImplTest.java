@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Optional;
+import java.util.UUID;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -45,9 +46,9 @@ class UserServiceImplTest {
     UserDto userDto = new UserDto();
     userDto.setEmail("test@example.com");
     userDto.setType(UserType.ADMINISTRATOR);
-
+    UUID id = UUID.randomUUID();
     User user = new User();
-    user.setId(1L);
+    user.setId(id);
     user.setEmail("test@example.com");
 
     when(repository.findByEmail(userDto.getEmail())).thenReturn(Optional.empty());
@@ -67,14 +68,13 @@ class UserServiceImplTest {
   @Test
   void testLoadUsersWithCSVFile() throws Exception {
     // Arrange
-    Long entityId = 1L;
     String csvContent = "123,John,Doe,john@example.com,+123456789, 1101, true";
     InputStream inputStream = new ByteArrayInputStream(csvContent.getBytes());
 
     MultipartFile file = mock(MultipartFile.class);
     when(file.getInputStream()).thenReturn(inputStream);
     when(file.getContentType()).thenReturn("text/csv");
-
+    UUID entityId = UUID.randomUUID();
     EntityDto entityDto = new EntityDto();
     entityDto.setId(entityId);
 
@@ -91,7 +91,7 @@ class UserServiceImplTest {
   @Test
   void testLoadUsersWithXLSXFile() throws Exception {
     // Arrange
-    Long entityId = 1L;
+    UUID entityId = UUID.randomUUID();
     byte[] xlsxContent = createSampleXLSXContent();
     InputStream inputStream = new ByteArrayInputStream(xlsxContent);
 
@@ -115,7 +115,7 @@ class UserServiceImplTest {
   @Test
   void testDeactivateUsersWithCSVFile() throws Exception {
     // Arrange
-    Long entityId = 1L;
+    UUID entityId = UUID.randomUUID();
     String csvContent = "123";
     InputStream inputStream = new ByteArrayInputStream(csvContent.getBytes());
 

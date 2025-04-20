@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +45,7 @@ public interface PocController {
         @ApiResponse(responseCode = "404", description = "POC not found", content = @Content)
       })
   @PatchMapping("/{id}")
-  ResponseEntity<PocDto> update(@RequestBody PocDto pocDto, @PathVariable Long id);
+  ResponseEntity<PocDto> update(@RequestBody PocDto pocDto, @PathVariable UUID id);
 
   @Operation(
       summary = "Delete a POC by ID",
@@ -57,7 +58,7 @@ public interface PocController {
         @ApiResponse(responseCode = "404", description = "POC not found", content = @Content)
       })
   @DeleteMapping("/{id}")
-  ResponseEntity<Void> delete(@PathVariable Long id);
+  ResponseEntity<Void> delete(@PathVariable UUID id);
 
   @Operation(
       summary = "Retrieve POCs by Entity ID",
@@ -73,5 +74,5 @@ public interface PocController {
         @ApiResponse(responseCode = "404", description = "No POCs found", content = @Content)
       })
   @GetMapping("/find-by-entity/{entityId}")
-  ResponseEntity<List<PocDto>> retrievePocByEntity(@PathVariable Long entityId);
+  ResponseEntity<List<PocDto>> retrievePocByEntity(@PathVariable UUID entityId);
 }

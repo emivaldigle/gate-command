@@ -1,5 +1,6 @@
 package com.visp.gate_command.controller;
 
+import com.visp.gate_command.domain.dto.EntityConfigurationDto;
 import com.visp.gate_command.domain.dto.EntityDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,7 +69,23 @@ public interface EntityController {
         @ApiResponse(responseCode = "404", description = "No entities found", content = @Content)
       })
   @GetMapping("/{id}")
-  ResponseEntity<EntityDto> findById(@PathVariable Long id);
+  ResponseEntity<EntityDto> findById(@PathVariable UUID id);
+
+  @Operation(
+      summary = "Retrieve an entity by id",
+      description = "Fetches an entity by provided id",
+      responses = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Entities retrieved successfully",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = EntityDto.class))),
+        @ApiResponse(responseCode = "404", description = "No entities found", content = @Content)
+      })
+  @GetMapping("/configuration/{id}")
+  ResponseEntity<EntityConfigurationDto> findConfigurationsForEntity(@PathVariable UUID id);
 
   @Operation(
       summary = "Delete an entity by ID",
@@ -80,7 +98,7 @@ public interface EntityController {
         @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
       })
   @DeleteMapping("/{id}")
-  ResponseEntity<Void> delete(@PathVariable Long id);
+  ResponseEntity<Void> delete(@PathVariable UUID id);
 
   @Operation(
       summary = "Update an existing entity",
@@ -93,5 +111,5 @@ public interface EntityController {
         @ApiResponse(responseCode = "404", description = "Entity not found", content = @Content)
       })
   @PatchMapping("/{id}")
-  ResponseEntity<EntityDto> update(@RequestBody EntityDto entityDto, @PathVariable Long id);
+  ResponseEntity<EntityDto> update(@RequestBody EntityDto entityDto, @PathVariable UUID id);
 }

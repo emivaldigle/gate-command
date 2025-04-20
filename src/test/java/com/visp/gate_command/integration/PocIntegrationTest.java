@@ -8,6 +8,7 @@ import com.visp.gate_command.domain.dto.EntityDto;
 import com.visp.gate_command.domain.dto.PocDto;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,7 +84,7 @@ class PocIntegrationTest {
               getAuthenticatedRestTemplate().postForEntity("/pocs", pocDto, PocDto.class);
             });
 
-    Map<String, Long> parameterMap =
+    Map<String, UUID> parameterMap =
         Map.of("entityId", Objects.requireNonNull(createEntityResponse.getBody()).getId());
     ResponseEntity<PocDto[]> getResponse =
         getAuthenticatedRestTemplate()
